@@ -42,6 +42,12 @@
     -webkit-font-smoothing:antialiased;
     overflow-x:hidden;
   }
+  .grain-overlay{
+    position:fixed; inset:0; z-index:9999; pointer-events:none;
+    opacity:0.05; mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMjAiIGhlaWdodD0iMjIwIj4KPGZpbHRlciBpZD0ibiI+PGZlVHVyYnVsZW5jZSB0eXBlPSJmcmFjdGFsTm9pc2UiIGJhc2VGcmVxdWVuY3k9IjAuOCIgbnVtT2N0YXZlcz0iMiIgc3RpdGNoVGlsZXM9InN0aXRjaCIgc2VlZD0iNyIvPjxmZUNvbG9yTWF0cml4IHR5cGU9Im1hdHJpeCIgdmFsdWVzPSIwIDAgMCAwIDAgIDAgMCAwIDAgMCAgMCAwIDAgMCAwICAwIDAgMCAwLjg1IDAiLz48L2ZpbHRlcj4KPHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsdGVyPSJ1cmwoI24pIi8+Cjwvc3ZnPg==");
+    background-size:220px 220px;
+  }
   img,svg{ max-width:100%; display:block; }
   a{ color:inherit; text-decoration:none; }
   h1,h2,h3,h4,p,ul{ margin:0; }
@@ -336,6 +342,7 @@
 </head>
 <body>
 
+<div class="grain-overlay"></div>
 <div id="progress-bar"></div>
 <nav id="site-nav">
   <a href="#/home" class="nav-emblem" data-route="home">
