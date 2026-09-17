@@ -1,13 +1,15 @@
 (function(){
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* ---------- SCROLL PROGRESS BAR ---------- */
+  /* ---------- SCROLL PROGRESS BAR + STICKY HEADER ---------- */
   var progressBar = document.getElementById('progress-bar');
+  var siteNav = document.getElementById('site-nav');
   function updateProgressBar(){
     var scrollTop = window.scrollY;
     var docHeight = document.documentElement.scrollHeight - window.innerHeight;
     var pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
     if(progressBar) progressBar.style.width = pct + '%';
+    if(siteNav) siteNav.classList.toggle('scrolled', scrollTop > 40);
   }
   window.addEventListener('scroll', updateProgressBar);
   updateProgressBar();
@@ -15,26 +17,32 @@
   /* ---------- MOBILE NAV TOGGLE ---------- */
   var toggle = document.getElementById('nav-toggle');
   var navLinksWrap = document.querySelector('.nav-links');
+  var mobileNavOpenTimer = null;
   function closeMobileNav(focusToggle){
     if(!navLinksWrap) return;
-    navLinksWrap.style.display = 'none';
+    navLinksWrap.classList.remove('mobile-open-visible');
     toggle.setAttribute('aria-expanded', 'false');
+    clearTimeout(mobileNavOpenTimer);
+    mobileNavOpenTimer = setTimeout(function(){ navLinksWrap.classList.remove('mobile-open'); }, reduced ? 0 : 220);
     if(focusToggle) toggle.focus();
   }
   function openMobileNav(){
-    navLinksWrap.style.display = 'flex';
-    navLinksWrap.style.cssText += 'position:fixed; top:64px; left:0; right:0; bottom:0; overflow-y:auto; background:var(--ivory); flex-direction:column; padding:24px 32px; border-bottom:1px solid var(--line); gap:18px;';
+    clearTimeout(mobileNavOpenTimer);
+    navLinksWrap.classList.add('mobile-open');
     toggle.setAttribute('aria-expanded', 'true');
+    requestAnimationFrame(function(){
+      requestAnimationFrame(function(){ navLinksWrap.classList.add('mobile-open-visible'); });
+    });
     var firstLink = navLinksWrap.querySelector('a, button');
     if(firstLink) firstLink.focus();
   }
   if(toggle && navLinksWrap){
     toggle.addEventListener('click', function(){
-      var open = navLinksWrap.style.display === 'flex';
+      var open = navLinksWrap.classList.contains('mobile-open');
       if(open) closeMobileNav(false); else openMobileNav();
     });
     document.addEventListener('keydown', function(e){
-      if(e.key === 'Escape' && navLinksWrap.style.display === 'flex'){
+      if(e.key === 'Escape' && navLinksWrap.classList.contains('mobile-open')){
         closeMobileNav(true);
       }
     });
@@ -264,10 +272,13 @@
     form.addEventListener('submit', function(e){
       e.preventDefault();
       var name = document.getElementById('c-name').value;
+      var company = document.getElementById('c-company').value;
       var mail = document.getElementById('c-mail').value;
-      var subject = document.getElementById('c-subject').value || 'Anfrage über die Website';
+      var phone = document.getElementById('c-phone').value;
+      var topic = document.getElementById('c-topic').value;
       var message = document.getElementById('c-message').value;
-      var body = 'Name: '+name+'\nE-Mail: '+mail+'\n\n'+message;
+      var subject = 'Kostenlose Potenzialanalyse' + (topic ? ' – ' + topic : '');
+      var body = 'Name: '+name+'\nUnternehmen: '+company+'\nE-Mail: '+mail+'\nTelefon: '+phone+'\nThema: '+topic+'\n\n'+message;
       window.location.href = 'mailto:info@steinhauermedia.de?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
     });
   }

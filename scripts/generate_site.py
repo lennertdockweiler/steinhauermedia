@@ -113,10 +113,10 @@ NAV_LABELS = {
 
 LEISTUNGEN_DROPDOWN = [
     ("social-media-agentur-konstanz", "Social Media"),
-    ("google-ads-agentur-konstanz", "Google Ads"),
-    ("seo-agentur-konstanz", "SEO & GEO"),
-    ("webdesign-konstanz", "Webdesign"),
     ("social-recruiting", "Social Recruiting"),
+    ("webdesign-konstanz", "Webdesign"),
+    ("seo-agentur-konstanz", "SEO & GEO"),
+    ("google-ads-agentur-konstanz", "Google & Meta Ads"),
     ("leistungen", "Leistungsübersicht"),
 ]
 
@@ -243,7 +243,7 @@ def render_nav(route):
 
     dd_items = "\n".join(
         f'          <a href="{href_to(s, depth)}" role="menuitem">{label}</a>' +
-        ("\n          <div class=\"divider\" role=\"separator\"></div>" if s == "social-recruiting" else "")
+        ("\n          <div class=\"divider\" role=\"separator\"></div>" if s == "google-ads-agentur-konstanz" else "")
         for s, label in LEISTUNGEN_DROPDOWN
     )
 
@@ -362,6 +362,20 @@ def cta_block(heading, btn_text, target_slug, depth):
   </section>'''
 
 
+def upcoming_case_callout(from_slug, anchor, name, category, blurb):
+    """A professionally styled 'case study coming soon' teaser -- no invented
+    numbers, just a dashed-border placeholder linking to the full write-up
+    on the Referenzen page once real, verified figures are available."""
+    d = ROUTES_BY_SLUG[from_slug]["depth"]
+    return f'''<div class="reveal case-upcoming" style="margin-top:46px;">
+      <span class="badge-soft">Case Study folgt</span>
+      <h3>{name}</h3>
+      <p class="muted" style="margin-top:6px; font-size:0.82rem; letter-spacing:0.06em; text-transform:uppercase;">{category}</p>
+      <p class="muted" style="margin-top:14px; max-width:560px;">{blurb}</p>
+      <div style="margin-top:20px;"><a href="{href_to('referenzen', d)}#{anchor}" class="link-underline">Zu den Referenzen</a></div>
+    </div>'''
+
+
 def related_links(depth, intro, links):
     a = ", ".join(f'<a href="{href_to(s, depth)}" class="link-underline">{label}</a>' for s, label in links)
     return f'<p class="muted related-links">{intro} {a}.</p>'
@@ -456,6 +470,14 @@ def render_client_logos(depth):
 # ---------------------------------------------------------------------------
 # Counter helper -- real value must be present in the static HTML.
 # ---------------------------------------------------------------------------
+FAQ_ZEITAUFWAND_A = (
+    "In der Regel benötigen wir etwa 30–60 Minuten pro Woche für den gemeinsamen "
+    "Drehtermin. Planung, Skripte, Schnitt, Veröffentlichung und Auswertung übernehmen "
+    "wir. Monatlich erhalten Sie einen kompakten Performance-Bericht; alle drei Monate "
+    "analysieren wir die Entwicklung ausführlich und leiten die nächsten Maßnahmen ab."
+)
+
+
 def counter_text(count, decimals=0, prefix="", suffix=""):
     val = f"{count:.{decimals}f}".replace(".", ",")
     return f"{prefix}{val}{suffix}"
@@ -490,6 +512,9 @@ def page_home():
         <path d="M50 345H350" stroke="#1E1B15" stroke-width="1"/>
         <circle cx="200" cy="90" r="10" stroke="#1E1B15" stroke-width="1"/>
       </svg>
+      <!-- TODO: sobald das Hero-Video vorliegt (Shawn & Lennert bei echten Kundendrehs: Kamera,
+           Skript, Kundendreh, Smartphone/Reel, Schnitt, Analytics, Kundengespräch), diesen
+           Platzhalter durch <video autoplay muted loop playsinline> ersetzen. Kein Stockvideo verwenden. -->
       <div class="hero-placeholder"><span>PLATZHALTER<br>Foto / Video<br>folgt</span></div>
     </div>
     <div class="container hero-inner">
@@ -497,11 +522,11 @@ def page_home():
         <svg class="em" viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M20 6L35 17H5L20 6Z" stroke="#1E1B15" stroke-width="1.4"/></svg>
         <span>Social Media &amp; Performance Marketing · Konstanz</span>
       </div>
-      <h1 id="hero-headline">Digitale Sichtbarkeit, die planbar Neukunden bringt.</h1>
-      <p class="lead">Ein Partner für Social-Media-Performance-Content, SEO/GEO und Werbeanzeigen — aus einer Hand, mit Sitz am Bodensee.</p>
+      <h1 id="hero-headline">Mehr Sichtbarkeit. Mehr Anfragen. Messbar.</h1>
+      <p class="lead">Wir helfen Unternehmen am Bodensee mit Social Media, Google und Performance Marketing dabei, aus Aufmerksamkeit echte Kunden zu machen.</p>
       <div class="hero-actions">
         <span class="magnetic-wrap" data-magnetic><a href="{href_to('kontakt', d)}" class="btn primary">Kostenlose Potenzialanalyse</a></span>
-        <a href="{href_to('leistungen', d)}" class="link-underline" style="color:var(--ink-soft);">Leistungen ansehen</a>
+        <a href="#ergebnisse" class="link-underline" style="color:var(--ink-soft);">Unsere Ergebnisse ansehen</a>
       </div>
     </div>
     <div class="hero-scroll"><div class="line"></div><span>Scrollen</span></div>
@@ -509,7 +534,12 @@ def page_home():
 
   <section class="block tight">
     <div class="container">
-      <div class="stats-grid stats-grid-5 reveal-stagger">
+      <div class="reveal" style="text-align:center;">
+        <p class="muted" style="font-size:0.82rem; letter-spacing:0.1em; text-transform:uppercase;">Vertraut von Unternehmen aus der Region</p>
+      </div>
+      <!-- TODO: sobald weitere freigegebene Kundenlogos vorliegen, hier ergänzen -->
+      {logos}
+      <div class="stats-grid stats-grid-5 reveal-stagger" style="margin-top:56px;">
         <div class="stat-item">{counter_span(100, suffix="%")}<div class="lbl">Fokus auf Kundenzufriedenheit</div></div>
         <div class="stat-item">{counter_span(3, suffix="+")}<div class="lbl">Jahre Erfahrung</div></div>
         <div class="stat-item">{counter_span(5, suffix=" Mio.+")}<div class="lbl">Views generiert</div></div>
@@ -522,24 +552,33 @@ def page_home():
   <section class="block deep">
     <div class="container">
       <div class="reveal">
-        <h2>Warum die meisten Unternehmen online unsichtbar bleiben.</h2>
-        <p class="prose muted" style="margin-top:18px;">Viele posten regelmäßig, verbrennen Budget für planlose Werbeanzeigen und erzielen trotzdem keine neuen Kundenanfragen. Wir schließen die Lücke zwischen kreativem Content und handfesten Verkaufszahlen.</p>
+        <h2>DAS PROBLEM</h2>
+        <p class="prose muted" style="margin-top:18px;">Die meisten Unternehmen scheitern nicht an fehlendem Aufwand, sondern an fehlender Strategie zwischen Content, Werbung und Website.</p>
       </div>
       <div class="split-cols">
-        <div class="reveal">
-          <h3>Das Problem</h3>
-          <ul>
-            <li><span class="mark" aria-hidden="true">–</span>Zeitraubendes Posten ohne klare Strategie</li>
-            <li><span class="mark" aria-hidden="true">–</span>Teure Ads ohne messbaren ROI</li>
-            <li><span class="mark" aria-hidden="true">–</span>Unsichtbarkeit bei regionalen Google-Suchen</li>
-          </ul>
+        <div class="reveal problem-list">
+          <div class="principle">
+            <div class="n" aria-hidden="true">01</div>
+            <h3>Content ohne klare Strategie</h3>
+            <p>Es wird regelmäßig gepostet, aber Reichweite und Anfragen bleiben aus.</p>
+          </div>
+          <div class="principle">
+            <div class="n" aria-hidden="true">02</div>
+            <h3>Werbebudget ohne nachvollziehbare Ergebnisse</h3>
+            <p>Kampagnen laufen, aber niemand weiß genau, welche Anfragen tatsächlich daraus entstehen.</p>
+          </div>
+          <div class="principle">
+            <div class="n" aria-hidden="true">03</div>
+            <h3>Bei Google kaum sichtbar</h3>
+            <p>Potenzielle Kunden suchen nach der Leistung – finden aber Wettbewerber zuerst.</p>
+          </div>
         </div>
         <div class="reveal">
-          <h3>Unsere Lösung</h3>
+          <h3>UNSER ANSATZ</h3>
           <ul>
-            <li><span class="mark" aria-hidden="true">+</span>Virale Kurzvideos mit Verkaufspsychologie</li>
-            <li><span class="mark" aria-hidden="true">+</span>Präzise Google- &amp; Social-Ads für echte Leads</li>
-            <li><span class="mark" aria-hidden="true">+</span>Lokale Dominanz durch SEO- &amp; GEO-Optimierung</li>
+            <li><span class="mark" aria-hidden="true">+</span>Content, der Reichweite und Vertrauen aufbaut</li>
+            <li><span class="mark" aria-hidden="true">+</span>Google &amp; Meta Ads für qualifizierte Anfragen</li>
+            <li><span class="mark" aria-hidden="true">+</span>Websites und SEO, die Besucher zu Kunden führen</li>
           </ul>
         </div>
       </div>
@@ -550,29 +589,49 @@ def page_home():
     <div class="container">
       <div class="reveal">
         <h2>Drei Leistungen, ein System.</h2>
-        <p class="prose muted" style="margin-top:16px;">Content, Sichtbarkeit und Werbung greifen bei uns ineinander — statt als lose Einzelmaßnahmen nebeneinander zu laufen.</p>
+        <p class="prose muted" style="margin-top:16px;">Content, Werbung und digitale Infrastruktur greifen bei uns ineinander, um Unternehmen sichtbar zu machen und Kundenanfragen zu erzeugen.</p>
       </div>
-      <div class="service-grid">
+      <div class="service-grid reveal-stagger">
         <a href="{href_to('social-media-agentur-konstanz', d)}" class="service-card" data-tilt>
           {ICON_SHORTFORM}
           <span class="tag">01 — Content</span>
-          <h3>Short-Form Video</h3>
-          <p>Organische Reels &amp; TikToks mit Verkaufspsychologie, die im Algorithmus wirklich funktionieren.</p>
+          <h3>Social Media &amp; Video</h3>
+          <p>Strategie, Ideen, Skripte, Drehs und Short-Form Content für Unternehmen.</p>
+          <span class="link-underline" style="margin-top:18px; display:inline-block;">Social Media ansehen</span>
         </a>
-        <a href="{href_to('seo-agentur-konstanz', d)}" class="service-card" data-tilt>
-          {ICON_SEO}
-          <span class="tag">02 — Sichtbarkeit</span>
-          <h3>SEO &amp; GEO</h3>
-          <p>Regionale Google-Dominanz, damit man Sie findet, bevor der Wettbewerb überhaupt in Sicht ist.</p>
+        <a href="{href_to('webdesign-konstanz', d)}" class="service-card" data-tilt>
+          {ICON_WEBDESIGN}
+          <span class="tag">03 — Web &amp; Search</span>
+          <h3>Website, SEO &amp; GEO</h3>
+          <p>Schnelle Websites und Suchmaschinenoptimierung, damit Unternehmen gefunden werden und Besucher zu Anfragen werden.</p>
+          <span class="link-underline" style="margin-top:18px; display:inline-block;">Website &amp; SEO ansehen</span>
         </a>
         <a href="{href_to('google-ads-agentur-konstanz', d)}" class="service-card" data-tilt>
           {ICON_ADS}
-          <span class="tag">03 — Wachstum</span>
+          <span class="tag">05 — Performance</span>
           <h3>Google &amp; Meta Ads</h3>
-          <p>Zielgerichtete Kampagnen, die kaufbereite Leads und Bewerber zuverlässig liefern.</p>
+          <p>Werbekampagnen, Tracking und Landingpages für qualifizierte Kundenanfragen.</p>
+          <span class="link-underline" style="margin-top:18px; display:inline-block;">Performance Marketing ansehen</span>
         </a>
       </div>
-      <div style="margin-top:34px;"><a href="{href_to('leistungen', d)}" class="link-underline">Alle Leistungen im Detail</a></div>
+      <p class="muted" style="margin-top:28px; font-size:0.92rem;">Zusätzlich: <a href="{href_to('social-recruiting', d)}" class="link-underline">Social Recruiting</a> — Mitarbeiter dort erreichen, wo sie jeden Tag unterwegs sind.</p>
+    </div>
+  </section>
+
+  <section class="block deep">
+    <div class="container">
+      <div class="reveal">
+        <h2>Ausgewählte Projekte</h2>
+        <p class="prose muted" style="margin-top:16px;">Eine Auswahl an Unternehmen, mit denen wir bereits zusammengearbeitet haben.</p>
+      </div>
+      <!-- TODO: Branche, durchgeführte Leistungen und belegbare Kennzahlen pro Projekt ergänzen, sobald freigegeben -->
+      <div class="projects-grid reveal-stagger" style="margin-top:44px;">
+        <div class="project-card"><img src="{asset('assets/img/client-club-aktiv.jpg', d)}" alt="Club Aktiv" loading="lazy" width="130" height="32"><span class="v">Club Aktiv</span></div>
+        <div class="project-card"><img src="{asset('assets/img/client-polywerft.jpg', d)}" alt="Polywerft" loading="lazy" width="130" height="32"><span class="v">Polywerft</span></div>
+        <div class="project-card"><img src="{asset('assets/img/client-bck-adventure.jpg', d)}" alt="BCK Adventure" loading="lazy" width="130" height="32"><span class="v">BCK Adventure</span></div>
+        <div class="project-card"><img src="{asset('assets/img/client-staib.jpg', d)}" alt="Staib" loading="lazy" width="130" height="32"><span class="v">Staib</span></div>
+      </div>
+      <div style="margin-top:34px;"><a href="{href_to('referenzen', d)}" class="link-underline">Alle Referenzen ansehen</a></div>
     </div>
   </section>
 
@@ -600,30 +659,85 @@ def page_home():
     </div>
   </section>
 
+  <section class="block" id="ergebnisse">
+    <div class="container">
+      <div class="reveal" style="max-width:720px;">
+        <p class="muted" style="font-size:0.82rem; letter-spacing:0.1em; text-transform:uppercase;">Case Study</p>
+        <h2 style="margin-top:14px;">142 qualifizierte Anfragen für eine lokale Dienstleisterin.</h2>
+        <p class="muted" style="margin-top:12px;">Google Search Ads + Meta Retargeting</p>
+      </div>
+      <div class="case-grid case-grid-3 reveal-stagger" style="margin-top:44px;">
+        <div class="case-card">{counter_span(142)}<div class="lbl">Anfragen</div></div>
+        <div class="case-card">{counter_span(17.6, decimals=1, prefix="€")}<div class="lbl">Cost per Lead</div></div>
+        <div class="case-card">{counter_span(8.4, decimals=1, suffix="%")}<div class="lbl">Conversion Rate</div></div>
+      </div>
+      <div class="case-study-grid reveal-stagger" style="margin-top:56px;">
+        <div>
+          <h4>Ausgangslage</h4>
+          <p class="muted">Eine Kundin im Bereich dauerhafte Haarentfernung in Regensburg wollte planbar mehr qualifizierte Anfragen gewinnen, statt sich auf Zufallslaufkundschaft zu verlassen.</p>
+        </div>
+        <div>
+          <h4>Strategie</h4>
+          <p class="muted">Kombination aus Google Search Ads für aktive Suchanfragen und Meta-Retargeting, um Interessenten erneut gezielt anzusprechen.</p>
+        </div>
+        <div>
+          <h4>Umsetzung</h4>
+          <p class="muted">Kampagnenstruktur, Zielgruppen, Landingpage und Tracking wurden aufgesetzt und laufend anhand der Ergebnisse optimiert.</p>
+        </div>
+        <div>
+          <h4>Ergebnis</h4>
+          <p class="muted">142 qualifizierte Neukundenanfragen bei 17,60&nbsp;€ Cost per Lead und einer Conversion-Rate von 8,4&nbsp;%.</p>
+        </div>
+      </div>
+      <div style="margin-top:34px;"><a href="{href_to('referenzen', d)}" class="link-underline">Case Study ansehen</a></div>
+    </div>
+  </section>
+
+  <section class="block deep">
+    <div class="container">
+      <div class="service-detail reveal" style="border-top:none; padding-top:0;">
+        <div>
+          {ICON_WEBDESIGN_LG}
+        </div>
+        <div>
+          <h2>Sehen Sie Ihre neue Website, bevor Sie uns beauftragen.</h2>
+          <p class="muted" style="margin-top:16px;">Keine abstrakten PDF-Konzepte. Für ausgewählte Projekte erstellen wir einen interaktiven Prototyp, den Sie direkt auf Smartphone und Desktop testen können.</p>
+          <div style="margin-top:26px; display:flex; gap:20px; flex-wrap:wrap;">
+            <a href="{href_to('webdesign-konstanz', d)}" class="btn primary">Webdesign ansehen</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section class="block">
     <div class="container">
-      <div class="reveal">
-        <p class="muted" style="margin-bottom:8px;">Vertraut von wachsenden Unternehmen</p>
-        {logos}
+      <div class="reveal" style="max-width:640px;">
+        <h2>Zwei Spezialisten. Ein Ansprechpartner für Ihre digitale Sichtbarkeit.</h2>
       </div>
-      <div class="project-row">
-        <div class="reveal">
-          <div class="scale-panel" data-scale><span>Beispiel-Kampagne · Regensburg</span></div>
+      <div class="team-grid" style="margin-top:44px;">
+        <div class="team-card reveal">
+          <img class="team-photo" src="{asset('assets/img/team-shawn.jpg', d)}" alt="Shawn, Social Media Spezialist bei Steinhauer Media" width="84" height="84">
+          <h3 style="font-size:1.1rem;">Shawn</h3>
+          <p class="gold" style="font-size:0.82rem; letter-spacing:0.06em; margin-top:4px;">Social Media &amp; organisches Wachstum</p>
+          <p>Verantwortlich für Social-Media-Strategie, Content, Drehs, Reels und organisches Wachstum.</p>
         </div>
-        <div class="reveal">
-          <h2>142 Anfragen bei 17,60&nbsp;€ pro Lead.</h2>
-          <p class="muted" style="margin-top:16px;">Für eine Kundin im Bereich dauerhafte Haarentfernung erzielten wir über Google Search Ads und Meta-Retargeting 142 qualifizierte Neukundenanfragen bei einer Conversion-Rate von 8,4&nbsp;%.</p>
-          <div style="margin-top:26px;"><a href="{href_to('referenzen', d)}" class="link-underline">Alle Projekte ansehen</a></div>
+        <div class="team-card reveal">
+          <img class="team-photo" src="{asset('assets/img/team-lennert.jpg', d)}" alt="Lennert, Spezialist für Websites und Performance Marketing bei Steinhauer Media" width="84" height="84">
+          <h3 style="font-size:1.1rem;">Lennert</h3>
+          <p class="gold" style="font-size:0.82rem; letter-spacing:0.06em; margin-top:4px;">Websites &amp; Performance Marketing</p>
+          <p>Verantwortlich für Webdesign, SEO, Google Ads, Meta Ads und Tracking.</p>
         </div>
       </div>
+      <div style="margin-top:30px;"><a href="{href_to('ueber-uns', d)}" class="link-underline">Mehr über uns</a></div>
     </div>
   </section>
 
   <section class="block deep">
     <div class="container">
       <div class="reveal">
-        <h2>Individuelle Pakete für planbare Ergebnisse.</h2>
-        <p class="prose muted" style="margin-top:16px;">Drei Modelle, ein gemeinsames Ziel: mehr Sichtbarkeit, die sich in echten Anfragen niederschlägt.</p>
+        <h2>Pakete für planbare Ergebnisse.</h2>
+        <p class="prose muted" style="margin-top:16px;">Drei Modelle als Ausgangspunkt — das passende Paket stimmen wir individuell mit Ihnen ab.</p>
       </div>
       <div class="pricing-grid" style="margin-top:44px;">
         <div class="pricing-card reveal">
@@ -634,6 +748,7 @@ def page_home():
             <li>Instagram &amp; Facebook</li>
             <li>Dreh vor Ort &amp; Schnitt</li>
           </ul>
+          <p class="muted" style="font-size:0.85rem; margin-top:auto; padding-top:16px;">Für wen geeignet? Unternehmen, die professionell mit Social Media starten möchten.</p>
         </div>
         <div class="pricing-card featured reveal">
           <span class="badge">Meistgewählt</span>
@@ -644,6 +759,7 @@ def page_home():
             <li>SEO- &amp; GEO-Optimierung</li>
             <li>Community Management</li>
           </ul>
+          <p class="muted" style="font-size:0.85rem; margin-top:auto; padding-top:16px;">Für wen geeignet? Unternehmen, die Content und digitale Sichtbarkeit aus einer Hand möchten.</p>
         </div>
         <div class="pricing-card reveal">
           <h3>Vollgas</h3>
@@ -653,9 +769,10 @@ def page_home():
             <li>Instagram, Facebook &amp; TikTok</li>
             <li>SEO, GEO &amp; Website</li>
           </ul>
+          <p class="muted" style="font-size:0.85rem; margin-top:auto; padding-top:16px;">Für wen geeignet? Unternehmen, die Content, Ads und Website kombinieren möchten.</p>
         </div>
       </div>
-      <div style="margin-top:34px;"><a href="{href_to('pakete', d)}" class="link-underline">Alle Pakete im Vergleich</a></div>
+      <div style="margin-top:34px;"><a href="{href_to('pakete', d)}" class="link-underline">Pakete ansehen</a></div>
     </div>
   </section>
 
@@ -667,7 +784,7 @@ def page_home():
       <div style="max-width:760px; margin-top:30px;">
         <div class="faq-item reveal">
           <button type="button" class="faq-q" aria-expanded="false"><span>Wie viel Zeitaufwand entsteht für mein Team und mich?</span><span class="plus" aria-hidden="true">+</span></button>
-          <div class="faq-a"><p>Minimal. Wir übernehmen Konzeption, Skripte, Vor-Ort-Dreh und den kompletten Schnitt. Für Sie fallen in der Regel nur 1–2 Stunden pro Monat für Freigaben an.</p></div>
+          <div class="faq-a"><p>{FAQ_ZEITAUFWAND_A}</p></div>
         </div>
         <div class="faq-item reveal">
           <button type="button" class="faq-q" aria-expanded="false"><span>Gibt es lange Vertragslaufzeiten?</span><span class="plus" aria-hidden="true">+</span></button>
@@ -681,11 +798,19 @@ def page_home():
   <section class="block tight">
     <div class="container">
       <div class="cta-mask reveal" data-mask>
-        <h2>Lassen Sie uns über Ihr Wachstum sprechen.</h2>
-        <p>Sichern Sie sich eine unverbindliche Potenzialanalyse — wir zeigen konkret, wie Sie mit Short-Form Video und Performance Ads planbar neue Kunden gewinnen.</p>
+        <p style="color:var(--gold-bright); font-size:0.8rem; letter-spacing:0.14em; text-transform:uppercase; position:relative; z-index:1;">Kostenlose Potenzialanalyse</p>
+        <h2 style="margin-top:16px;">Finden wir heraus, wo Ihr größtes digitales Potenzial liegt.</h2>
+        <p>In einem unverbindlichen Gespräch schauen wir uns an:</p>
+        <ul class="check-list" style="text-align:left; max-width:460px; margin:22px auto 0; position:relative; z-index:1;">
+          <li>wie sichtbar Ihr Unternehmen aktuell ist</li>
+          <li>wo potenzielle Kunden verloren gehen</li>
+          <li>welche Kanäle für Ihr Unternehmen sinnvoll sind</li>
+          <li>welche nächsten Schritte sinnvoll wären</li>
+        </ul>
         <div class="btn-zone">
-          <span class="magnetic-wrap" data-magnetic><a href="{href_to('kontakt', d)}" class="btn on-dark primary" style="background:var(--gold-bright); color:var(--dark); border-color:var(--gold-bright);">Potenzialanalyse anfragen</a></span>
+          <span class="magnetic-wrap" data-magnetic><a href="{href_to('kontakt', d)}" class="btn on-dark primary" style="background:var(--gold-bright); color:var(--dark); border-color:var(--gold-bright);">Kostenlose Potenzialanalyse anfragen</a></span>
         </div>
+        <p class="muted" style="margin-top:16px; font-size:0.82rem; position:relative; z-index:1;">Unverbindlich · keine Vorbereitung notwendig</p>
         <div class="contact-quick">
           <div class="item"><div class="k" style="color:rgba(246,241,228,0.5);">Adresse</div><div class="v" style="color:var(--ivory);">{ADDRESS_LINE}</div></div>
           <div class="item"><div class="k" style="color:rgba(246,241,228,0.5);">E-Mail</div><div class="v" style="color:var(--ivory);">{EMAIL}</div></div>
@@ -704,11 +829,11 @@ def page_leistungen():
     d = route["depth"]
     crumb = render_breadcrumb(route)
     cards = [
-        ("social-media-agentur-konstanz", ICON_SHORTFORM, "01", "Short-Form Video", "Organische Reels &amp; TikToks in drei aufeinander abgestimmten Formaten für maximale Reichweite, Vertrauen und Kundenbindung."),
-        ("seo-agentur-konstanz", ICON_SEO, "02", "SEO &amp; GEO", "Regionale Google-Dominanz statt Unsichtbarkeit bei lokalen Suchanfragen."),
-        ("google-ads-agentur-konstanz", ICON_ADS, "03", "Google &amp; Meta Ads", "Ganzheitliches Kampagnen-Management für kaufbereite Neukunden und qualifizierte Fachkräfte."),
-        ("social-recruiting", ICON_RECRUITING, "04", "Social Recruiting", "Authentische Recruiting-Reels gegen den Fachkräftemangel."),
-        ("webdesign-konstanz", ICON_WEBDESIGN, "05", "Webdesign &amp; Prototyping", "Schnelle, moderne Websites — vorab live und interaktiv zum Testen."),
+        ("social-media-agentur-konstanz", ICON_SHORTFORM, "01", "Social Media &amp; Video", "Strategie, Ideen, Skripte, Drehs und Short-Form Content für Unternehmen."),
+        ("social-recruiting", ICON_RECRUITING, "02", "Social Recruiting", "Mitarbeiter dort erreichen, wo sie jeden Tag unterwegs sind."),
+        ("webdesign-konstanz", ICON_WEBDESIGN, "03", "Webdesign", "Schnelle, moderne Websites — vorab live und interaktiv zum Testen, bevor Sie uns beauftragen."),
+        ("seo-agentur-konstanz", ICON_SEO, "04", "SEO &amp; GEO", "Local SEO, technische SEO und GEO für nachhaltige Sichtbarkeit bei Google."),
+        ("google-ads-agentur-konstanz", ICON_ADS, "05", "Google &amp; Meta Ads", "Werbekampagnen, Tracking und Landingpages für qualifizierte Kundenanfragen."),
     ]
     card_html = "\n    ".join(f'''<a class="service-detail reveal" href="{href_to(slug, d)}" style="text-decoration:none; color:inherit;">
       <div>
@@ -742,12 +867,24 @@ def page_leistungen():
 # ---------------------------------------------------------------------------
 # Shared shell for the 5 dedicated service pages
 # ---------------------------------------------------------------------------
-def service_page(slug, kicker_num, icon_lg, heading, lead, bullets, related_intro, related_targets):
+def service_page(slug, kicker_num, icon_lg, heading, lead, bullets, related_intro, related_targets,
+                  cta_text="Kostenlose Potenzialanalyse", workflow=None, callout="", note=""):
     route = ROUTES_BY_SLUG[slug]
     d = route["depth"]
     crumb = render_breadcrumb(route)
     lis = "\n          ".join(f'<li>{b}</li>' for b in bullets)
     related = related_links(d, related_intro, related_targets)
+    workflow_html = ""
+    if workflow:
+        steps = "\n        ".join(
+            f'<div class="workflow-step"><span class="n">{i+1:02d}</span><span>{step}</span></div>' +
+            ("<span class=\"workflow-arrow\" aria-hidden=\"true\">→</span>" if i < len(workflow) - 1 else "")
+            for i, step in enumerate(workflow)
+        )
+        workflow_html = f'''<div class="reveal workflow-row" style="margin-top:46px;">
+        {steps}
+      </div>'''
+    note_html = f'<p class="muted" style="margin-top:22px; font-size:0.85rem;">{note}</p>' if note else ""
     main = f'''{crumb}
   <section class="page-hero">
     <div class="container">
@@ -757,7 +894,7 @@ def service_page(slug, kicker_num, icon_lg, heading, lead, bullets, related_intr
     </div>
   </section>
 
-  <section class="container" style="padding-bottom:70px;">
+  <section class="container" style="padding-bottom:20px;">
     <div class="service-detail reveal">
       <div>
         {icon_lg}
@@ -766,89 +903,158 @@ def service_page(slug, kicker_num, icon_lg, heading, lead, bullets, related_intr
         <ul>
           {lis}
         </ul>
+        {note_html}
         {related}
       </div>
     </div>
+    {workflow_html}
+    {callout}
   </section>
 
-  {cta_block("Bereit für den ersten Schritt?", "Kostenlose Potenzialanalyse", "kontakt", d)}'''
+  {cta_block("Bereit für den ersten Schritt?", cta_text, "kontakt", d)}'''
     write_page(route, main)
 
 
 def page_social_media():
-    d = ROUTES_BY_SLUG["social-media-agentur-konstanz"]["depth"]
     service_page(
         "social-media-agentur-konstanz", "01", ICON_SHORTFORM_LG,
-        "Short-Form Video Content",
-        "Organische Reels &amp; TikToks in drei aufeinander abgestimmten Formaten für maximale Reichweite, Vertrauen und Kundenbindung.",
+        "Social Media für Unternehmen in Konstanz &amp; am Bodensee.",
+        "Strategie, Ideen, Skripte, Drehs und Short-Form Content für Unternehmen — von der ersten Idee bis zum veröffentlichten Reel.",
         [
-            "Humorvolle Alltags-Hooks für virale Reichweite",
-            "Experten-Talking-Heads für Vertrauensaufbau",
-            "Informative Karussell-Posts zum Merken &amp; Teilen",
-            "Skript, Dreh vor Ort, Schnitt, Posting &amp; Community Management",
+            "Strategie &amp; Content-Planung",
+            "Ideen &amp; Skripte",
+            "Drehs vor Ort",
+            "Schnitt",
+            "Reels &amp; Instagram-Betreuung",
+            "TikTok",
+            "Posting",
+            "Reporting",
         ],
         "Passt gut dazu:",
         [("google-ads-agentur-konstanz", "Google & Meta Ads"), ("referenzen", "Referenzen"), ("kontakt", "Kontakt")],
+        cta_text="Social-Media-Potenzial besprechen",
+        workflow=["Strategie", "Skript", "Dreh", "Schnitt", "Veröffentlichung", "Analyse"],
+        callout=upcoming_case_callout(
+            "social-media-agentur-konstanz", "case-club-aktiv", "Club Aktiv",
+            "Social Media · organisches Instagram-Wachstum",
+            "Ein lokales Fitnessstudio, für das wir organische Social-Media-Präsenz und Community-Aufbau umsetzen. Die vollständige Case Study folgt, sobald die Ergebnisse final ausgewertet sind.",
+        ),
     )
 
 
 def page_google_ads():
+    case_callout = f'''<div class="reveal case-callout" style="margin-top:46px;">
+      <p class="muted" style="font-size:0.82rem; letter-spacing:0.1em; text-transform:uppercase;">Ergebnis aus der Praxis</p>
+      <div class="case-grid case-grid-3" style="margin-top:20px;">
+        <div class="case-card">{counter_span(142)}<div class="lbl">Anfragen</div></div>
+        <div class="case-card">{counter_span(17.6, decimals=1, prefix="€")}<div class="lbl">Cost per Lead</div></div>
+        <div class="case-card">{counter_span(8.4, decimals=1, suffix="%")}<div class="lbl">Conversion Rate</div></div>
+      </div>
+      <p class="muted" style="margin-top:16px; font-size:0.9rem;">Google Search Ads + Meta Retargeting für eine lokale Dienstleisterin. <a href="../referenzen/" class="link-underline">Case Study ansehen</a></p>
+    </div>'''
     service_page(
-        "google-ads-agentur-konstanz", "03", ICON_ADS_LG,
-        "Google &amp; Meta Ads",
-        "Ganzheitliches Kampagnen-Management für kaufbereite Neukunden und qualifizierte Fachkräfte.",
+        "google-ads-agentur-konstanz", "05", ICON_ADS_LG,
+        "Google Ads für Unternehmen in Konstanz und am Bodensee.",
+        "Werbekampagnen, Tracking und Landingpages für qualifizierte Kundenanfragen — Meta Ads ergänzen die Strategie dort, wo es sinnvoll ist.",
         [
-            "High-Intent Search Ads für aktive Suchanfragen",
-            "Meta-Retargeting mit Video-Creatives",
-            "Laufende Optimierung von Keywords &amp; Geboten",
+            "Search Ads",
+            "Keyword-Recherche",
+            "Tracking",
+            "Landingpages",
+            "Kampagnenoptimierung",
+            "Retargeting",
+            "Reporting",
         ],
         "Passt gut dazu:",
         [("referenzen", "Case Study ansehen"), ("kontakt", "Kontakt")],
+        cta_text="Ads-Potenzial besprechen",
+        callout=case_callout,
     )
 
 
 def page_seo():
     service_page(
-        "seo-agentur-konstanz", "02", ICON_SEO_LG,
-        "SEO &amp; GEO",
-        "Regionale Google-Dominanz statt Unsichtbarkeit bei lokalen Suchanfragen.",
+        "seo-agentur-konstanz", "04", ICON_SEO_LG,
+        "Bei Google gefunden werden, wenn Kunden nach Ihrer Leistung suchen.",
+        "Local SEO, technische SEO und GEO, damit Unternehmen dort gefunden werden, wo potenzielle Kunden tatsächlich suchen.",
         [
-            "Website- &amp; Content-SEO für nachhaltiges Ranking",
-            "Generative Engine Optimization für KI-Suchergebnisse",
-            "Google-Unternehmensprofil auf Bestleistung optimiert",
+            "Local SEO",
+            "Technische SEO",
+            "On-Page SEO",
+            "Content",
+            "Google Unternehmensprofil",
+            "Lokale Suchanfragen",
+            "Strukturierte Daten",
+            "GEO / KI-Sichtbarkeit",
         ],
         "Passt gut dazu:",
         [("webdesign-konstanz", "Webdesign"), ("kontakt", "Kontakt")],
+        cta_text="SEO-Potenzial prüfen",
+        note="Wir versprechen keine bestimmten Rankings, sondern arbeiten kontinuierlich und nachvollziehbar an nachhaltiger Sichtbarkeit.",
     )
 
 
 def page_webdesign():
+    d = ROUTES_BY_SLUG["webdesign-konstanz"]["depth"]
+    demo_section = f'''<div class="reveal" style="margin-top:70px; max-width:680px;">
+      <p class="muted" style="font-size:0.82rem; letter-spacing:0.1em; text-transform:uppercase;">Interaktive Website-Demo</p>
+      <h2 style="margin-top:14px;">Nicht nur ansehen. Direkt ausprobieren.</h2>
+      <p class="muted" style="margin-top:14px;">Für ausgewählte Projekte erstellen wir bereits vor der finalen Entscheidung einen klickbaren Prototyp. So sehen Sie nicht nur ein Konzept – Sie erleben bereits, wie Ihre zukünftige Website funktionieren könnte.</p>
+    </div>
+    <div class="reveal proto-frame lg" style="margin-top:36px;">
+      <div class="proto-toggle">
+        <button type="button" class="proto-btn active" data-view="desktop" aria-pressed="true">🖥 Desktop</button>
+        <button type="button" class="proto-btn" data-view="mobile" aria-pressed="false">📱 Smartphone</button>
+        <a href="https://zahnarzt.steinhauermedia.de" target="_blank" rel="noopener" class="link-underline proto-openlink">Demo in neuem Tab öffnen</a>
+      </div>
+      <div class="proto-viewport view-desktop" id="proto-viewport">
+        <iframe src="https://zahnarzt.steinhauermedia.de" title="Interaktive Website-Demo Zahnarztpraxis" loading="lazy"></iframe>
+      </div>
+    </div>'''
     service_page(
-        "webdesign-konstanz", "05", ICON_WEBDESIGN_LG,
-        "Webdesign &amp; Prototyping",
-        "Schnelle, moderne Websites — vorab live und interaktiv zum Testen.",
+        "webdesign-konstanz", "03", ICON_WEBDESIGN_LG,
+        "Websites, die gut aussehen und aus Besuchern Anfragen machen.",
+        "Schnelle, moderne Websites — vorab live und interaktiv zum Testen, bevor Sie uns beauftragen.",
         [
-            "Blitzschnelle, mobiloptimierte Umsetzung",
-            "Interaktive Live-Vorschau vor Beauftragung",
-            "Direkt verzahnt mit SEO &amp; GEO",
+            "Konzeption",
+            "UI/UX",
+            "Responsive Umsetzung",
+            "Mobile",
+            "Performance",
+            "SEO",
+            "Conversion",
+            "Analytics",
+            "Deployment",
         ],
         "Passt gut dazu:",
         [("seo-agentur-konstanz", "SEO & GEO"), ("referenzen", "Referenzen"), ("kontakt", "Kontakt")],
+        cta_text="Website-Prototyp anfragen",
+        callout=demo_section,
     )
 
 
 def page_social_recruiting():
     service_page(
-        "social-recruiting", "04", ICON_RECRUITING_LG,
-        "Social Recruiting",
-        "Authentische Recruiting-Reels gegen den Fachkräftemangel.",
+        "social-recruiting", "02", ICON_RECRUITING_LG,
+        "Mitarbeiter dort erreichen, wo sie jeden Tag unterwegs sind.",
+        "Authentische Recruiting-Reels und gezielte Meta-Kampagnen für Unternehmen, die neue Mitarbeitende suchen.",
         [
-            "„Ein Tag als …“ — Einblicke in Team &amp; Arbeitsalltag",
-            "Klare Ansprache von Benefits &amp; Gehalt",
-            "60-Sekunden Express-Bewerbung ohne Lebenslauf",
+            "Recruiting Reels",
+            "Arbeitgeberpositionierung",
+            "Mitarbeiterinterviews",
+            "Arbeitsalltag",
+            "Meta-Kampagnen",
+            "Bewerbungsfunnels",
         ],
         "Passt gut dazu:",
-        [("social-media-agentur-konstanz", "Short-Form Video"), ("kontakt", "Kontakt")],
+        [("social-media-agentur-konstanz", "Social Media"), ("kontakt", "Kontakt")],
+        cta_text="Recruiting-Potenzial besprechen",
+        note="Wir garantieren keine bestimmte Bewerberzahl, sondern qualifizierte Sichtbarkeit bei potenziellen Mitarbeitenden.",
+        callout=upcoming_case_callout(
+            "social-recruiting", "case-polywerft", "Polywerft Konstanz",
+            "Social Recruiting",
+            "Eine Recruiting-Kampagne, mit der wir Mitarbeiter für Polywerft Konstanz gewinnen. Die vollständige Case Study folgt, sobald die Ergebnisse final ausgewertet sind.",
+        ),
     )
 
 # ---------------------------------------------------------------------------
@@ -880,6 +1086,7 @@ def page_pakete():
           <li>Video-Dreh vor Ort &amp; Schnitt</li>
           <li>Caption, Cover &amp; Posting</li>
         </ul>
+        <p class="muted" style="font-size:0.85rem; margin-bottom:20px;">Für wen geeignet? Unternehmen, die professionell mit Social Media starten möchten.</p>
         <a href="mailto:{EMAIL}" class="btn" style="text-align:center; justify-content:center;">Kostenloses Angebot</a>
       </div>
       <div class="pricing-card featured reveal">
@@ -892,6 +1099,7 @@ def page_pakete():
           <li>SEO &amp; GEO Website-Optimierung</li>
           <li>Regelmäßiges Performance-Reporting</li>
         </ul>
+        <p class="muted" style="font-size:0.85rem; margin-bottom:20px;">Für wen geeignet? Unternehmen, die Content und digitale Sichtbarkeit aus einer Hand möchten.</p>
         <a href="mailto:{EMAIL}" class="btn on-dark" style="text-align:center; justify-content:center;">Kostenloses Angebot</a>
       </div>
       <div class="pricing-card reveal">
@@ -903,6 +1111,7 @@ def page_pakete():
           <li>Zusätzlich TikTok-Betreuung</li>
           <li>Google &amp; Meta Ads inklusive</li>
         </ul>
+        <p class="muted" style="font-size:0.85rem; margin-bottom:20px;">Für wen geeignet? Unternehmen, die Content, Ads und Website kombinieren möchten.</p>
         <a href="mailto:{EMAIL}" class="btn" style="text-align:center; justify-content:center;">Kostenloses Angebot</a>
       </div>
     </div>
@@ -912,7 +1121,7 @@ def page_pakete():
       <div style="margin-top:30px;">
         <div class="faq-item reveal">
           <button type="button" class="faq-q" aria-expanded="false"><span>Wie viel Zeitaufwand entsteht für mein Team und mich?</span><span class="plus" aria-hidden="true">+</span></button>
-          <div class="faq-a"><p>Minimal. Wir übernehmen Konzeption, Skripte, Vor-Ort-Dreh und den kompletten Schnitt. Für Sie fallen in der Regel nur 1–2 Stunden pro Monat für Freigaben und kurze Abstimmungen an.</p></div>
+          <div class="faq-a"><p>{FAQ_ZEITAUFWAND_A}</p></div>
         </div>
         <div class="faq-item reveal">
           <button type="button" class="faq-q" aria-expanded="false"><span>Auf welchen Plattformen laufen Content und Ads?</span><span class="plus" aria-hidden="true">+</span></button>
@@ -960,17 +1169,69 @@ def page_referenzen():
     </div>
   </section>
 
-  <section class="container" style="padding-bottom:80px;">
+  <section class="container" id="case-google-ads" style="padding-bottom:80px;">
     <div class="reveal" style="max-width:640px;">
-      <h2>Beispiel-Kampagne: Regensburg</h2>
-      <p class="muted" style="margin-top:14px;">Für eine Kundin im Bereich dauerhafte Haarentfernung kombinierten wir Google Search Ads mit Meta-Retargeting.</p>
+      <h2>142 qualifizierte Anfragen für eine lokale Dienstleisterin.</h2>
+      <p class="muted" style="margin-top:14px;">Google Search Ads + Meta Retargeting · Beispiel-Kampagne, Regensburg</p>
     </div>
     <div class="case-grid" style="margin-top:44px;">
-      <div class="case-card reveal">{counter_span(142)}<div class="lbl">Generierte Anfragen</div></div>
+      <div class="case-card reveal">{counter_span(142)}<div class="lbl">Anfragen</div></div>
       <div class="case-card reveal">{counter_span(1.48, decimals=1, prefix="€")}<div class="lbl">Kosten pro Klick</div></div>
-      <div class="case-card reveal">{counter_span(8.4, decimals=1, suffix="%")}<div class="lbl">Conversion-Rate</div></div>
-      <div class="case-card reveal">{counter_span(17.6, decimals=1, prefix="€")}<div class="lbl">Kosten pro Lead</div></div>
+      <div class="case-card reveal">{counter_span(8.4, decimals=1, suffix="%")}<div class="lbl">Conversion Rate</div></div>
+      <div class="case-card reveal">{counter_span(17.6, decimals=1, prefix="€")}<div class="lbl">Cost per Lead</div></div>
     </div>
+    <div class="case-study-grid reveal-stagger" style="margin-top:56px;">
+      <div>
+        <h4>Ausgangslage</h4>
+        <p class="muted">Eine Kundin im Bereich dauerhafte Haarentfernung in Regensburg wollte planbar mehr qualifizierte Anfragen gewinnen, statt sich auf Zufallslaufkundschaft zu verlassen.</p>
+      </div>
+      <div>
+        <h4>Strategie</h4>
+        <p class="muted">Kombination aus Google Search Ads für aktive Suchanfragen und Meta-Retargeting, um Interessenten erneut gezielt anzusprechen.</p>
+      </div>
+      <div>
+        <h4>Umsetzung</h4>
+        <!-- TODO: weitere Umsetzungsdetails (Creatives, Zeitraum, Budget) ergänzen, sobald final freigegeben -->
+        <p class="muted">Kampagnenstruktur, Zielgruppen, Landingpage und Tracking wurden aufgesetzt und laufend anhand der Ergebnisse optimiert.</p>
+      </div>
+      <div>
+        <h4>Ergebnis</h4>
+        <p class="muted">142 qualifizierte Neukundenanfragen bei 17,60&nbsp;€ Cost per Lead und einer Conversion-Rate von 8,4&nbsp;%.</p>
+      </div>
+    </div>
+    {related_links(d, "Passende Leistung:", [("google-ads-agentur-konstanz", "Google & Meta Ads")])}
+  </section>
+
+  <section class="container" style="padding-bottom:80px;">
+    <div class="reveal" style="max-width:640px; margin-bottom:8px;">
+      <p class="muted" style="font-size:0.82rem; letter-spacing:0.1em; text-transform:uppercase;">Weitere Projekte</p>
+      <h2 style="margin-top:14px;">Case Studies in Vorbereitung.</h2>
+      <p class="muted" style="margin-top:14px;">Diese Projekte laufen bereits — die vollständigen Ergebnisse veröffentlichen wir hier, sobald sie final ausgewertet und freigegeben sind.</p>
+    </div>
+    <div class="upcoming-grid" style="margin-top:44px;">
+      <div class="reveal case-upcoming" id="case-club-aktiv">
+        <span class="badge-soft">Case Study folgt</span>
+        <h3>Club Aktiv</h3>
+        <p class="muted" style="margin-top:6px; font-size:0.82rem; letter-spacing:0.06em; text-transform:uppercase;">Social Media · organisches Instagram-Wachstum</p>
+        <p class="muted" style="margin-top:14px;">Ein Fitnessstudio, für das wir organische Social-Media-Präsenz und Community-Aufbau umsetzen — von Content-Strategie bis Reels.</p>
+        <div class="fields">
+          Zeitraum · Ausgangslage · Content-Strategie · veröffentlichte Reels · Views · Reichweite · Followerentwicklung · Engagement · Top-Reels · Ergebnis
+        </div>
+        {related_links(d, "Passende Leistung:", [("social-media-agentur-konstanz", "Social Media")])}
+      </div>
+      <div class="reveal case-upcoming" id="case-polywerft">
+        <span class="badge-soft">Case Study folgt</span>
+        <h3>Polywerft Konstanz</h3>
+        <p class="muted" style="margin-top:6px; font-size:0.82rem; letter-spacing:0.06em; text-transform:uppercase;">Social Recruiting</p>
+        <p class="muted" style="margin-top:14px;">Eine Recruiting-Kampagne, mit der wir Mitarbeiter für Polywerft Konstanz gewinnen — mit authentischen Recruiting-Reels und gezielter Ansprache.</p>
+        <div class="fields">
+          Ausgangslage · gesuchte Position(en) · Recruiting-Strategie · Content / Recruiting-Reels · Kampagne · Bewerbungen · qualifizierte Bewerbungen · Einstellungen · Zeitraum · Ergebnis
+        </div>
+        {related_links(d, "Passende Leistung:", [("social-recruiting", "Social Recruiting")])}
+      </div>
+    </div>
+    <!-- TODO: replace placeholder structure above with verified figures for Club Aktiv and
+         Polywerft Konstanz once available; keep the "Case Study folgt" framing until then. -->
   </section>
 
   <section class="container" style="padding-bottom:100px;">
@@ -990,7 +1251,7 @@ def page_referenzen():
     </div>
   </section>
 
-  {cta_block("Ihr Projekt könnte das nächste sein.", "Jetzt Kontakt aufnehmen", "kontakt", d)}'''
+  {cta_block("Ihr Projekt könnte das nächste sein.", "Kostenlose Potenzialanalyse", "kontakt", d)}'''
     write_page(route, main)
 
 
@@ -1006,7 +1267,7 @@ def page_ueber_uns():
   <section class="page-hero">
     <div class="container">
       <div class="kicker">Über uns</div>
-      <h1 style="font-size:clamp(1.9rem,4vw,3rem);">Gemeinsam sind wir Steinhauer Media.</h1>
+      <h1 style="font-size:clamp(1.9rem,4vw,3rem);">Zwei Spezialisten. Ein Ansprechpartner für Ihre digitale Sichtbarkeit.</h1>
       <p class="prose muted" style="margin-top:18px;">Zwei Spezialisten, ein System: Content, der gesehen wird, und Performance, die sich rechnet.</p>
     </div>
   </section>
@@ -1014,23 +1275,37 @@ def page_ueber_uns():
   <section class="container" style="padding-bottom:90px;">
     <div class="team-grid">
       <div class="team-card reveal">
-        <img class="team-photo" src="{asset('assets/img/team-shawn.jpg', d)}" alt="Shawn, Instagram-Experte bei Steinhauer Media" width="84" height="84">
+        <img class="team-photo" src="{asset('assets/img/team-shawn.jpg', d)}" alt="Shawn, Social Media Spezialist bei Steinhauer Media" width="84" height="84">
         <h2 style="font-size:1.18rem;">Shawn</h2>
-        <p class="gold" style="font-size:0.82rem; letter-spacing:0.06em; margin-top:4px;">Instagram &amp; organisches Wachstum</p>
-        <p>Shawn ist unser Instagram-Experte mit jahrelanger Erfahrung im organischen Wachstum durch Reels. Er entwickelt Reel-Strategien, die messbar Reichweite, Sichtbarkeit und Ergebnisse bringen.</p>
+        <p class="gold" style="font-size:0.82rem; letter-spacing:0.06em; margin-top:4px;">Social Media &amp; organisches Wachstum</p>
+        <p>Verantwortlich für:</p>
+        <ul style="margin-top:10px;">
+          <li>Social-Media-Strategie</li>
+          <li>Content</li>
+          <li>Drehs</li>
+          <li>Reels</li>
+          <li>organisches Wachstum</li>
+        </ul>
       </div>
       <div class="team-card reveal">
-        <img class="team-photo" src="{asset('assets/img/team-lennert.jpg', d)}" alt="Lennert, Experte für Websites, SEO und bezahlte Werbung bei Steinhauer Media" width="84" height="84">
+        <img class="team-photo" src="{asset('assets/img/team-lennert.jpg', d)}" alt="Lennert, Spezialist für Websites und Performance Marketing bei Steinhauer Media" width="84" height="84">
         <h2 style="font-size:1.18rem;">Lennert</h2>
-        <p class="gold" style="font-size:0.82rem; letter-spacing:0.06em; margin-top:4px;">Websites, SEO &amp; bezahlte Werbung</p>
-        <p>Lennert ist unser Profi für Websites, SEO und bezahlte Werbung. Mit fundiertem Know-how in Suchmaschinenoptimierung und Performance-Marketing macht er aus jeder Website eine Wachstumsmaschine.</p>
+        <p class="gold" style="font-size:0.82rem; letter-spacing:0.06em; margin-top:4px;">Websites &amp; Performance Marketing</p>
+        <p>Verantwortlich für:</p>
+        <ul style="margin-top:10px;">
+          <li>Webdesign</li>
+          <li>SEO</li>
+          <li>Google Ads</li>
+          <li>Meta Ads</li>
+          <li>Tracking</li>
+        </ul>
       </div>
     </div>
   </section>
 
   <section class="container" style="padding-bottom:90px;">
-    <div class="reveal" style="max-width:760px; border:1px solid var(--line); padding:8px; border-radius:var(--radius);">
-      <img src="{asset('assets/img/team-group.jpg', d)}" alt="Shawn und Lennert, die Gründer von Steinhauer Media" style="width:100%; border-radius:2px;" width="900" height="600">
+    <div class="reveal img-reveal team-group-frame">
+      <img src="{asset('assets/img/team-group.jpg', d)}" alt="Shawn und Lennert, die Gründer von Steinhauer Media" width="900" height="600" loading="lazy">
     </div>
   </section>
 
@@ -1053,14 +1328,14 @@ def page_ueber_uns():
         <div class="principle reveal">
           <div class="n" aria-hidden="true">03</div>
           <h3>Fokus auf messbaren Ertrag</h3>
-          <p>Keine Vanity-Metriken. Bei uns zählen qualifizierte Leads und eine dominierende regionale Google-Präsenz.</p>
+          <p>Keine Vanity-Metriken. Bei uns zählen qualifizierte Leads und nachvollziehbare Sichtbarkeit bei Google.</p>
         </div>
       </div>
       {related}
     </div>
   </section>
 
-  {cta_block("Lernen Sie uns persönlich kennen.", "Termin vereinbaren", "kontakt", d)}'''
+  {cta_block("Lernen Sie uns persönlich kennen.", "Kostenlose Potenzialanalyse", "kontakt", d)}'''
     write_page(route, main)
 
 # ---------------------------------------------------------------------------
@@ -1086,16 +1361,29 @@ def page_kontakt():
   <section class="container" style="padding-bottom:110px;">
     <div class="contact-grid">
       <form id="contact-form" class="reveal" aria-label="Kontaktformular">
-        <div class="form-row"><label for="c-name">Name</label><input id="c-name" name="name" type="text" required autocomplete="name"></div>
-        <div class="form-row"><label for="c-mail">E-Mail</label><input id="c-mail" name="email" type="email" required autocomplete="email"></div>
-        <div class="form-row"><label for="c-subject">Betreff</label><input id="c-subject" name="subject" type="text"></div>
-        <div class="form-row"><label for="c-message">Ihre Nachricht</label><textarea id="c-message" name="message" rows="5" required></textarea></div>
-        <span class="magnetic-wrap" data-magnetic><button type="submit" class="btn primary">Nachricht senden</button></span>
+        <div class="form-row"><label for="c-name">Name*</label><input id="c-name" name="name" type="text" required autocomplete="name"></div>
+        <div class="form-row"><label for="c-company">Unternehmen</label><input id="c-company" name="company" type="text" autocomplete="organization"></div>
+        <div class="form-row"><label for="c-mail">E-Mail*</label><input id="c-mail" name="email" type="email" required autocomplete="email"></div>
+        <div class="form-row"><label for="c-phone">Telefon</label><input id="c-phone" name="phone" type="tel" autocomplete="tel"></div>
+        <div class="form-row">
+          <label for="c-topic">Wobei können wir helfen?*</label>
+          <select id="c-topic" name="topic" required>
+            <option value="">Bitte auswählen</option>
+            <option value="Social Media">Social Media</option>
+            <option value="Google / Meta Ads">Google / Meta Ads</option>
+            <option value="SEO">SEO</option>
+            <option value="Website">Website</option>
+            <option value="Recruiting">Recruiting</option>
+            <option value="Noch unsicher">Noch unsicher</option>
+          </select>
+        </div>
+        <div class="form-row"><label for="c-message">Erzählen Sie uns kurz, worum es geht.*</label><textarea id="c-message" name="message" rows="5" required></textarea></div>
+        <span class="magnetic-wrap" data-magnetic><button type="submit" class="btn primary">Kostenlose Potenzialanalyse anfragen</button></span>
       </form>
       <div class="contact-side reveal">
-        <div class="card"><div class="k">Adresse</div><div class="v">{ADDRESS_LINE}</div></div>
         <div class="card"><div class="k">E-Mail</div><div class="v"><a href="mailto:{EMAIL}" class="link-underline">{EMAIL}</a></div></div>
         {phone_cards}
+        <div class="card"><div class="k">Adresse</div><div class="v">{ADDRESS_LINE}</div></div>
       </div>
     </div>
   </section>'''
