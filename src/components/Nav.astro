@@ -74,38 +74,53 @@ const { active = "", variant = "dark" } = Astro.props;
 </header>
 
 <script>
-  const trigger = document.getElementById("leistungen-trigger");
-  const group = trigger?.closest(".group");
-  let closeTimer: number | undefined;
-  const open = () => { window.clearTimeout(closeTimer); group?.classList.add("open"); trigger?.setAttribute("aria-expanded", "true"); };
-  const close = () => { closeTimer = window.setTimeout(() => { group?.classList.remove("open"); trigger?.setAttribute("aria-expanded", "false"); }, 150); };
-  group?.addEventListener("mouseenter", open);
-  group?.addEventListener("mouseleave", close);
-  trigger?.addEventListener("click", () => group?.classList.contains("open") ? close() : open());
+  // Astro's view transitions swap the DOM on every navigation, and an
+  // already-evaluated ES module never re-runs its top-level code — so
+  // listeners bound once at load time end up attached to elements that
+  // no longer exist after the first navigation (this is what caused the
+  // mobile menu to stop opening after visiting a subpage). Re-binding on
+  // "astro:page-load" (which also fires on the very first load) fixes it.
+  function bindNav() {
+    const trigger = document.getElementById("leistungen-trigger");
+    const group = trigger?.closest(".group");
+    let closeTimer: number | undefined;
+    const open = () => { window.clearTimeout(closeTimer); group?.classList.add("open"); trigger?.setAttribute("aria-expanded", "true"); };
+    const close = () => { closeTimer = window.setTimeout(() => { group?.classList.remove("open"); trigger?.setAttribute("aria-expanded", "false"); }, 150); };
+    group?.addEventListener("mouseenter", open);
+    group?.addEventListener("mouseleave", close);
+    trigger?.addEventListener("click", () => group?.classList.contains("open") ? close() : open());
 
-  const navToggle = document.getElementById("nav-toggle");
-  const mobileMenu = document.getElementById("mobile-menu");
-  navToggle?.addEventListener("click", () => {
-    const isOpen = mobileMenu?.classList.toggle("hidden") === false;
-    navToggle.setAttribute("aria-expanded", String(isOpen));
-    document.getElementById("burger")?.classList.toggle("burger-open", isOpen);
-  });
+    const navToggle = document.getElementById("nav-toggle");
+    const mobileMenu = document.getElementById("mobile-menu");
+    navToggle?.addEventListener("click", () => {
+      const isOpen = mobileMenu?.classList.toggle("hidden") === false;
+      navToggle.setAttribute("aria-expanded", String(isOpen));
+      document.getElementById("burger")?.classList.toggle("burger-open", isOpen);
+    });
 
-  const mTrigger = document.getElementById("mobile-leistungen-trigger");
-  const mSub = document.getElementById("mobile-leistungen-submenu");
-  mTrigger?.addEventListener("click", () => {
-    const isOpen = mSub?.classList.toggle("hidden") === false;
-    mTrigger.setAttribute("aria-expanded", String(isOpen));
-  });
+    const mTrigger = document.getElementById("mobile-leistungen-trigger");
+    const mSub = document.getElementById("mobile-leistungen-submenu");
+    mTrigger?.addEventListener("click", () => {
+      const isOpen = mSub?.classList.toggle("hidden") === false;
+      mTrigger.setAttribute("aria-expanded", String(isOpen));
+    });
+  }
 
-  const header = document.getElementById("site-nav");
-  const onScroll = () => {
+  // The scroll listener targets #site-nav fresh on every tick instead of a
+  // captured reference, and document itself is never replaced by a
+  // transition, so this one is safe to attach only once at module scope.
+  function updateNavScrollState() {
+    const header = document.getElementById("site-nav");
     if (!header) return;
     if (window.scrollY > 12) header.classList.add("nav-scrolled");
     else header.classList.remove("nav-scrolled");
-  };
-  onScroll();
-  document.addEventListener("scroll", onScroll, { passive: true });
+  }
+
+  document.addEventListener("astro:page-load", () => {
+    bindNav();
+    updateNavScrollState();
+  });
+  document.addEventListener("scroll", updateNavScrollState, { passive: true });
 </script>
 
 <style>

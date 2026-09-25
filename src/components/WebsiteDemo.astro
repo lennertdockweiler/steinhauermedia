@@ -26,20 +26,24 @@ const { heading, lead } = Astro.props;
 </div>
 
 <script>
-  document.querySelectorAll<HTMLElement>("[data-demo-viewport]").forEach((viewport) => {
-    const wrapper = viewport.closest("div.rounded-2xl");
-    const iframe = viewport.querySelector("iframe") as HTMLIFrameElement | null;
-    const buttons = wrapper?.querySelectorAll<HTMLButtonElement>("[data-demo-view]");
-    buttons?.forEach((btn) => {
-      btn.addEventListener("click", () => {
-        buttons.forEach((b) => b.classList.remove("is-active"));
-        btn.classList.add("is-active");
-        if (!iframe) return;
-        if (btn.dataset.demoView === "mobile") {
-          iframe.style.maxWidth = "390px";
-        } else {
-          iframe.style.maxWidth = "100%";
-        }
+  // Re-bind on every astro:page-load (fires on first load too) so this
+  // still works after navigating away and back via a view transition.
+  document.addEventListener("astro:page-load", () => {
+    document.querySelectorAll<HTMLElement>("[data-demo-viewport]").forEach((viewport) => {
+      const wrapper = viewport.closest("div.rounded-2xl");
+      const iframe = viewport.querySelector("iframe") as HTMLIFrameElement | null;
+      const buttons = wrapper?.querySelectorAll<HTMLButtonElement>("[data-demo-view]");
+      buttons?.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          buttons.forEach((b) => b.classList.remove("is-active"));
+          btn.classList.add("is-active");
+          if (!iframe) return;
+          if (btn.dataset.demoView === "mobile") {
+            iframe.style.maxWidth = "390px";
+          } else {
+            iframe.style.maxWidth = "100%";
+          }
+        });
       });
     });
   });

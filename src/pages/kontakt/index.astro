@@ -82,20 +82,24 @@ import { company } from "../../data/site";
 </Layout>
 
 <script define:vars={{ email: company.email }}>
-  const form = document.getElementById("contact-form");
-  form?.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const data = new FormData(form);
-    const lines = [
-      `Unternehmen: ${data.get("company") || "-"}`,
-      `Telefon: ${data.get("phone") || "-"}`,
-      `Thema: ${data.get("topic")}`,
-      "",
-      String(data.get("message") || ""),
-    ];
-    const subject = encodeURIComponent(`Potenzialanalyse-Anfrage von ${data.get("name")}`);
-    const body = encodeURIComponent(lines.join("\n"));
-    window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
+  // Re-bind on every astro:page-load (fires on first load too) so this
+  // still works after navigating away and back via a view transition.
+  document.addEventListener("astro:page-load", () => {
+    const form = document.getElementById("contact-form");
+    form?.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const data = new FormData(form);
+      const lines = [
+        `Unternehmen: ${data.get("company") || "-"}`,
+        `Telefon: ${data.get("phone") || "-"}`,
+        `Thema: ${data.get("topic")}`,
+        "",
+        String(data.get("message") || ""),
+      ];
+      const subject = encodeURIComponent(`Potenzialanalyse-Anfrage von ${data.get("name")}`);
+      const body = encodeURIComponent(lines.join("\n"));
+      window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
+    });
   });
 </script>
 
