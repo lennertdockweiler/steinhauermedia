@@ -1,0 +1,46 @@
+---
+import "../styles/global.css";
+import Seo from "../components/Seo.astro";
+import Nav from "../components/Nav.astro";
+import Footer from "../components/Footer.astro";
+import { ClientRouter } from "astro:transitions";
+
+interface Crumb { label: string; slug?: string }
+interface Props {
+  title: string;
+  description: string;
+  slug?: string;
+  crumbs?: Crumb[];
+  navActive?: string;
+  navVariant?: "dark" | "light";
+  robotsNoindex?: boolean;
+}
+
+const {
+  title,
+  description,
+  slug = "",
+  crumbs = [],
+  navActive = "",
+  navVariant = "dark",
+  robotsNoindex = false,
+} = Astro.props;
+---
+<!doctype html>
+<html lang="de" class="no-js">
+<head>
+  <Seo title={title} description={description} slug={slug} crumbs={crumbs} />
+  {robotsNoindex && <meta name="robots" content="noindex,follow" />}
+  <ClientRouter />
+</head>
+<body class="bg-canvas text-ivory grain">
+  <Nav active={navActive} variant={navVariant} />
+  <main id="main">
+    <slot />
+  </main>
+  <Footer />
+  <script>
+    import "../scripts/animations";
+  </script>
+</body>
+</html>

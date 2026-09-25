@@ -1,0 +1,41 @@
+---
+import { company, footerLeistungen, footerAgentur, footerRechtlich } from "../data/site";
+const year = new Date().getFullYear();
+---
+
+<footer class="bg-canvas-soft border-t border-canvas-line pt-20 pb-8">
+  <div class="wrap">
+    <div class="grid grid-cols-2 md:grid-cols-5 gap-10 md:gap-8">
+      <div class="col-span-2">
+        <a href="/" class="flex items-center gap-2.5 mb-4">
+          <img src="/images/logo.png" alt="Steinhauer Media" width="24" height="24" />
+          <span class="font-display font-semibold tracking-[0.06em] text-sm">STEINHAUER MEDIA</span>
+        </a>
+        <p class="text-ivory-dim text-sm max-w-[260px] leading-relaxed">Social Media · Performance Marketing · Webdesign<br />Konstanz / Bodensee</p>
+        <a href={company.instagram} target="_blank" rel="noopener" class="link-underline text-sm mt-4 inline-flex">Instagram</a>
+      </div>
+      <div>
+        <h5 class="text-xs tracking-[0.1em] uppercase text-ivory-faint mb-4">Leistungen</h5>
+        <ul class="flex flex-col gap-3 text-sm text-ivory-dim">
+          {footerLeistungen.map((l) => <li><a href={`/${l.slug}/`} class="hover:text-lime transition-colors">{l.label}</a></li>)}
+        </ul>
+      </div>
+      <div>
+        <h5 class="text-xs tracking-[0.1em] uppercase text-ivory-faint mb-4">Agentur</h5>
+        <ul class="flex flex-col gap-3 text-sm text-ivory-dim">
+          {footerAgentur.map((l) => <li><a href={`/${l.slug}/`} class="hover:text-lime transition-colors">{l.label}</a></li>)}
+        </ul>
+      </div>
+      <div>
+        <h5 class="text-xs tracking-[0.1em] uppercase text-ivory-faint mb-4">Rechtlich</h5>
+        <ul class="flex flex-col gap-3 text-sm text-ivory-dim">
+          {footerRechtlich.map((l) => <li><a href={`/${l.slug}/`} class="hover:text-lime transition-colors">{l.label}</a></li>)}
+        </ul>
+      </div>
+    </div>
+    <div class="flex flex-col sm:flex-row justify-between gap-2 mt-16 pt-6 border-t border-canvas-line text-xs text-ivory-faint">
+      <span>&copy; {year} Steinhauer Media. Alle Rechte vorbehalten.</span>
+      <span>Relaunch-Entwurf · Version 02</span>
+    </div>
+  </div>
+</footer>

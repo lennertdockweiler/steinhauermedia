@@ -1,0 +1,120 @@
+---
+import Layout from "../layouts/Layout.astro";
+import WordReveal from "../components/WordReveal.astro";
+import LogoMarquee from "../components/LogoMarquee.astro";
+import StatRow from "../components/StatRow.astro";
+import ServiceGrid from "../components/ServiceGrid.astro";
+import CaseStats from "../components/CaseStats.astro";
+import ProcessStrip from "../components/ProcessStrip.astro";
+import TeamStrip from "../components/TeamStrip.astro";
+import CtaSection from "../components/CtaSection.astro";
+import { stats, flagshipCase } from "../data/site";
+---
+<Layout
+  title="Steinhauer Media | Social Media & Performance Marketing Konstanz"
+  description="Steinhauer Media aus Konstanz: Social-Media-Content, SEO/GEO und Google & Meta Ads aus einer Hand. Kostenlose Potenzialanalyse für planbar mehr Kunden am Bodensee."
+  slug=""
+  navActive="home"
+>
+  <!-- HERO -->
+  <section class="relative min-h-screen flex items-center overflow-hidden pt-24">
+    <div class="absolute inset-0 -z-10" aria-hidden="true">
+      <div class="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_0%,rgba(203,255,77,0.14),transparent)]"></div>
+      <div class="absolute inset-0 opacity-[0.07]" style="background-image: linear-gradient(to right, #f5f2ec 1px, transparent 1px), linear-gradient(to bottom, #f5f2ec 1px, transparent 1px); background-size: 64px 64px; mask-image: radial-gradient(ellipse 70% 60% at 50% 30%, black, transparent);"></div>
+    </div>
+
+    <div class="wrap relative py-20">
+      <p class="reveal kicker">
+        <span class="w-1.5 h-1.5 rounded-full bg-lime"></span>
+        Social Media &amp; Performance Marketing · Konstanz
+      </p>
+      <h1 class="mt-6 text-[clamp(2.4rem,7vw,5.4rem)] max-w-4xl">
+        <WordReveal text="Mehr Sichtbarkeit." /><br />
+        <WordReveal text="Mehr Anfragen. Messbar." class="text-lime" />
+      </h1>
+      <p class="reveal text-ivory-dim text-[1.1rem] mt-7 max-w-lg leading-relaxed">
+        Wir helfen Unternehmen am Bodensee mit Social Media, Google und Performance Marketing dabei, aus Aufmerksamkeit echte Kunden zu machen.
+      </p>
+      <div class="reveal mt-9 flex flex-wrap items-center gap-6">
+        <a href="/kontakt/" class="magnetic btn btn-primary" data-magnetic>Kostenlose Potenzialanalyse</a>
+        <a href="#ergebnisse" class="link-underline text-ivory-dim text-sm">Unsere Ergebnisse ansehen</a>
+      </div>
+    </div>
+
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-ivory-faint text-[0.7rem] tracking-[0.14em] uppercase">
+      <span class="block w-px h-10 bg-gradient-to-b from-transparent via-ivory-faint to-transparent"></span>
+      Scrollen
+    </div>
+  </section>
+
+  <!-- TRUST BAR -->
+  <section class="py-14 border-y border-canvas-line">
+    <p class="reveal text-center text-ivory-faint text-xs tracking-[0.12em] uppercase mb-8">Vertraut von Unternehmen am Bodensee</p>
+    <LogoMarquee />
+  </section>
+
+  <!-- COMPACT PROOF ROW -->
+  <section class="py-16">
+    <div class="wrap">
+      <StatRow stats={stats} />
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="py-20 md:py-28">
+    <div class="wrap">
+      <div class="reveal flex flex-wrap items-end justify-between gap-6 mb-12">
+        <div>
+          <p class="kicker">Leistungen</p>
+          <h2 class="mt-4 text-[clamp(1.8rem,4vw,2.6rem)] max-w-lg">Drei Leistungen, ein System.</h2>
+        </div>
+        <p class="text-ivory-dim max-w-sm text-sm leading-relaxed">Content, Werbung und digitale Infrastruktur greifen bei uns ineinander, um Unternehmen sichtbar zu machen.</p>
+      </div>
+      <ServiceGrid compact />
+    </div>
+  </section>
+
+  <!-- FLAGSHIP CASE -->
+  <section id="ergebnisse" class="py-20 md:py-28 bg-canvas-soft border-y border-canvas-line">
+    <div class="wrap">
+      <div class="reveal max-w-xl">
+        <p class="kicker">Case Study</p>
+        <h2 class="mt-4 text-[clamp(1.6rem,3.6vw,2.4rem)]">{flagshipCase.title}</h2>
+        <p class="text-ivory-dim mt-3 text-sm">{flagshipCase.subtitle}</p>
+      </div>
+      <CaseStats stats={flagshipCase.stats} class="mt-10" />
+      <div class="mt-10">
+        <a href="/referenzen/" class="link-underline text-sm">Case Study ansehen <span class="arrow">→</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <ProcessStrip />
+
+  <!-- TEAM -->
+  <section class="py-20 md:py-28">
+    <div class="wrap">
+      <div class="reveal mb-10">
+        <p class="kicker">Über uns</p>
+        <h2 class="mt-4 text-[clamp(1.6rem,3.6vw,2.4rem)] max-w-lg">Zwei Spezialisten. Ein Ansprechpartner.</h2>
+      </div>
+      <TeamStrip />
+      <div class="mt-8">
+        <a href="/ueber-uns/" class="link-underline text-sm">Mehr über uns <span class="arrow">→</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <CtaSection
+    heading="Finden wir heraus, wo Ihr größtes digitales Potenzial liegt."
+    body="In einem unverbindlichen Gespräch schauen wir uns an, wie sichtbar Sie heute sind und was als nächstes sinnvoll ist."
+    bullets={[
+      "wie sichtbar Ihr Unternehmen aktuell ist",
+      "wo potenzielle Kunden verloren gehen",
+      "welche Kanäle für Sie sinnvoll sind",
+    ]}
+    showContact
+  />
+</Layout>

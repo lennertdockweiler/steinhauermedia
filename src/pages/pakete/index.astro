@@ -1,0 +1,32 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import PageHero from "../../components/PageHero.astro";
+import PricingGrid from "../../components/PricingGrid.astro";
+import Faq from "../../components/Faq.astro";
+import { faq } from "../../data/site";
+---
+<Layout
+  title="Marketing Pakete | Steinhauer Media"
+  description="Basis, Komplett-Service oder Vollgas: Die Marketing-Pakete von Steinhauer Media im Vergleich – transparent, flexibel und individuell abstimmbar."
+  slug="pakete"
+  navActive="pakete"
+  crumbs={[{ label: "Pakete" }]}
+>
+  <PageHero
+    kicker="Pakete"
+    heading="Transparente Zusammenarbeit, planbare Ergebnisse."
+    lead="Drei Modelle als Ausgangspunkt — das passende Paket stimmen wir immer individuell mit Ihnen ab."
+    crumbs={[{ label: "Pakete" }]}
+  />
+  <section class="pb-24 md:pb-28">
+    <div class="wrap">
+      <PricingGrid withCta />
+    </div>
+  </section>
+  <section class="pb-28 md:pb-32">
+    <div class="wrap max-w-3xl">
+      <h2 class="text-[clamp(1.5rem,3.2vw,2rem)] mb-8">Häufig gestellte Fragen.</h2>
+      <Faq items={faq} />
+    </div>
+  </section>
+</Layout>

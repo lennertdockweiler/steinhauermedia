@@ -1,0 +1,51 @@
+---
+import { company } from "../data/site";
+interface Props {
+  eyebrow?: string;
+  heading: string;
+  body?: string;
+  bullets?: string[];
+  buttonLabel?: string;
+  showContact?: boolean;
+}
+const {
+  eyebrow = "Kostenlose Potenzialanalyse",
+  heading,
+  body,
+  bullets = [],
+  buttonLabel = "Kostenlose Potenzialanalyse anfragen",
+  showContact = false,
+} = Astro.props;
+---
+<section class="py-24 md:py-32">
+  <div class="wrap">
+    <div class="reveal relative rounded-[28px] surface-light overflow-hidden px-6 py-16 md:py-20 text-center">
+      <div class="absolute -top-24 -right-24 w-72 h-72 rounded-full bg-lime/30 blur-3xl" aria-hidden="true"></div>
+      <div class="relative max-w-xl mx-auto">
+        <p class="kicker justify-center">{eyebrow}</p>
+        <h2 class="mt-4 text-[clamp(1.6rem,3.6vw,2.4rem)]">{heading}</h2>
+        {body && <p class="text-graphite mt-4">{body}</p>}
+        {bullets.length > 0 && (
+          <ul class="mt-6 flex flex-col gap-2.5 text-left max-w-sm mx-auto text-graphite text-[0.95rem]">
+            {bullets.map((b) => (
+              <li class="flex items-start gap-2.5">
+                <span class="mt-[3px] w-4 h-4 rounded-full bg-ink/90 text-ivory flex items-center justify-center shrink-0 text-[10px]">+</span>
+                {b}
+              </li>
+            ))}
+          </ul>
+        )}
+        <div class="mt-9">
+          <a href="/kontakt/" class="magnetic btn btn-primary" data-magnetic>{buttonLabel}</a>
+        </div>
+        {showContact && (
+          <div class="mt-10 pt-8 border-t border-ink/10 grid sm:grid-cols-3 gap-6 text-left text-sm">
+            <div><div class="text-graphite text-xs uppercase tracking-wide">Adresse</div><div class="mt-1">{company.addressLine}</div></div>
+            <div><div class="text-graphite text-xs uppercase tracking-wide">E-Mail</div><div class="mt-1">{company.email}</div></div>
+            <div><div class="text-graphite text-xs uppercase tracking-wide">Telefon</div><div class="mt-1">{company.phones[0].value}</div></div>
+          </div>
+        )}
+      </div>
+    </div>
+  </div>
+</section>

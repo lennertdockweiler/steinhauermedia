@@ -1,0 +1,32 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import PageHero from "../../components/PageHero.astro";
+import ServiceDetail from "../../components/ServiceDetail.astro";
+import CaseStats from "../../components/CaseStats.astro";
+import CtaSection from "../../components/CtaSection.astro";
+import { services, flagshipCase } from "../../data/site";
+
+const service = services.find((s) => s.slug === "google-ads-agentur-konstanz")!;
+---
+<Layout
+  title="Google Ads Agentur Konstanz | Steinhauer Media"
+  description="Google & Meta Ads Management von Steinhauer Media: zielgerichtete Kampagnen für kaufbereite Neukunden – für Unternehmen in Konstanz und am Bodensee."
+  slug="google-ads-agentur-konstanz"
+  navActive="leistungen"
+  crumbs={[{ label: "Leistungen", slug: "leistungen" }, { label: "Google Ads" }]}
+>
+  <PageHero
+    kicker="Leistungen · 05"
+    heading={service.heading}
+    lead={service.lead}
+    crumbs={[{ label: "Leistungen", slug: "leistungen" }, { label: "Google Ads" }]}
+  />
+  <ServiceDetail service={service}>
+    <div class="reveal">
+      <p class="kicker">Ergebnis aus der Praxis</p>
+      <CaseStats stats={flagshipCase.stats} class="mt-6" />
+      <p class="text-ivory-dim text-sm mt-5">Google Search Ads + Meta Retargeting für eine lokale Dienstleisterin. <a href="/referenzen/" class="link-underline text-ivory">Case Study ansehen</a></p>
+    </div>
+  </ServiceDetail>
+  <CtaSection heading="Bereit für den ersten Schritt?" buttonLabel={service.ctaText} />
+</Layout>

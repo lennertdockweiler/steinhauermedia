@@ -1,0 +1,19 @@
+---
+interface Stat { value: number; suffix?: string; prefix?: string; decimals?: number; label: string }
+interface Props { stats: Stat[]; class?: string }
+const { stats, class: klass = "" } = Astro.props;
+---
+<div class={`reveal-stagger grid grid-cols-2 md:grid-cols-5 gap-8 md:gap-6 ${klass}`}>
+  {stats.map((s) => (
+    <div class="text-center md:text-left">
+      <div
+        class="font-display text-3xl md:text-[2.1rem] font-semibold text-lime"
+        data-count={s.value}
+        data-decimals={s.decimals ?? 0}
+        data-prefix={s.prefix ?? ""}
+        data-suffix={s.suffix ?? ""}
+      >{(s.prefix ?? "") + s.value.toFixed(s.decimals ?? 0).replace(".", ",") + (s.suffix ?? "")}</div>
+      <div class="text-ivory-dim text-[0.82rem] mt-1.5 leading-snug">{s.label}</div>
+    </div>
+  ))}
+</div>

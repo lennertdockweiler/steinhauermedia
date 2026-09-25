@@ -1,0 +1,26 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import PageHero from "../../components/PageHero.astro";
+import ServiceGrid from "../../components/ServiceGrid.astro";
+import CtaSection from "../../components/CtaSection.astro";
+---
+<Layout
+  title="Online Marketing Leistungen | Steinhauer Media Konstanz"
+  description="Social Media, SEO & GEO, Google & Meta Ads, Social Recruiting und Webdesign: Steinhauer Media aus Konstanz bündelt Ihr Online-Marketing in einem System."
+  slug="leistungen"
+  navActive="leistungen"
+  crumbs={[{ label: "Leistungen" }]}
+>
+  <PageHero
+    kicker="Leistungen"
+    heading="Alles aus einer Hand — von der Idee bis zum Umsatz."
+    lead="Fünf Bausteine, die einzeln funktionieren und gemeinsam ihre volle Wirkung entfalten."
+    crumbs={[{ label: "Leistungen" }]}
+  />
+  <section class="pb-24 md:pb-32">
+    <div class="wrap">
+      <ServiceGrid />
+    </div>
+  </section>
+  <CtaSection heading="Bereit für den ersten Schritt?" />
+</Layout>

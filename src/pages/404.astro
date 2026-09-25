@@ -1,0 +1,20 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+<Layout
+  title="Seite nicht gefunden | Steinhauer Media"
+  description="Diese Seite konnte nicht gefunden werden."
+  robotsNoindex
+>
+  <section class="pt-48 pb-32 text-center">
+    <div class="wrap">
+      <p class="kicker justify-center">404</p>
+      <h1 class="mt-4 text-[clamp(2rem,5vw,3.2rem)]">Diese Seite gibt es leider nicht.</h1>
+      <p class="text-ivory-dim mt-5 max-w-md mx-auto">Der aufgerufene Link ist veraltet oder fehlerhaft. Nutzen Sie einen der folgenden Wege weiter.</p>
+      <div class="flex flex-wrap justify-center gap-4 mt-9">
+        <a href="/" class="btn btn-primary">Zur Startseite</a>
+        <a href="/kontakt/" class="btn btn-ghost">Kontakt</a>
+      </div>
+    </div>
+  </section>
+</Layout>

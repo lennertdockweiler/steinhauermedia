@@ -1,0 +1,116 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import PageHero from "../../components/PageHero.astro";
+import { company } from "../../data/site";
+---
+<Layout
+  title="Kontakt & Potenzialanalyse | Steinhauer Media"
+  description="Kontaktieren Sie Steinhauer Media in Konstanz für eine kostenlose Potenzialanalyse – per Telefon, WhatsApp, E-Mail oder Kontaktformular."
+  slug="kontakt"
+  navActive="kontakt"
+  crumbs={[{ label: "Kontakt" }]}
+>
+  <PageHero
+    kicker="Kontakt"
+    heading="Lassen Sie uns über Ihr Wachstum sprechen."
+    lead="Schreiben Sie uns unkompliziert eine Nachricht oder greifen Sie direkt zum Hörer."
+    crumbs={[{ label: "Kontakt" }]}
+  />
+
+  <section class="pb-28 md:pb-32">
+    <div class="wrap grid lg:grid-cols-[1fr_360px] gap-14">
+      <form id="contact-form" class="reveal flex flex-col gap-5" aria-label="Kontaktformular">
+        <div class="grid sm:grid-cols-2 gap-5">
+          <div class="flex flex-col gap-2">
+            <label for="c-name" class="text-sm text-ivory-dim">Name*</label>
+            <input id="c-name" name="name" type="text" required autocomplete="name" class="form-input" />
+          </div>
+          <div class="flex flex-col gap-2">
+            <label for="c-company" class="text-sm text-ivory-dim">Unternehmen</label>
+            <input id="c-company" name="company" type="text" autocomplete="organization" class="form-input" />
+          </div>
+          <div class="flex flex-col gap-2">
+            <label for="c-mail" class="text-sm text-ivory-dim">E-Mail*</label>
+            <input id="c-mail" name="email" type="email" required autocomplete="email" class="form-input" />
+          </div>
+          <div class="flex flex-col gap-2">
+            <label for="c-phone" class="text-sm text-ivory-dim">Telefon</label>
+            <input id="c-phone" name="phone" type="tel" autocomplete="tel" class="form-input" />
+          </div>
+        </div>
+        <div class="flex flex-col gap-2">
+          <label for="c-topic" class="text-sm text-ivory-dim">Wobei können wir helfen?*</label>
+          <select id="c-topic" name="topic" required class="form-input">
+            <option value="">Bitte auswählen</option>
+            <option value="Social Media">Social Media</option>
+            <option value="Google / Meta Ads">Google / Meta Ads</option>
+            <option value="SEO">SEO</option>
+            <option value="Website">Website</option>
+            <option value="Recruiting">Recruiting</option>
+            <option value="Noch unsicher">Noch unsicher</option>
+          </select>
+        </div>
+        <div class="flex flex-col gap-2">
+          <label for="c-message" class="text-sm text-ivory-dim">Erzählen Sie uns kurz, worum es geht.*</label>
+          <textarea id="c-message" name="message" rows="5" required class="form-input resize-none"></textarea>
+        </div>
+        <button type="submit" class="magnetic btn btn-primary self-start mt-2" data-magnetic>Kostenlose Potenzialanalyse anfragen</button>
+      </form>
+
+      <div class="reveal flex flex-col gap-4">
+        <div class="rounded-2xl border border-canvas-line bg-canvas-soft p-5">
+          <div class="text-ivory-faint text-xs uppercase tracking-wide">E-Mail</div>
+          <a href={`mailto:${company.email}`} class="link-underline mt-1.5 inline-flex text-sm">{company.email}</a>
+        </div>
+        {company.phones.map((p) => (
+          <div class="rounded-2xl border border-canvas-line bg-canvas-soft p-5">
+            <div class="text-ivory-faint text-xs uppercase tracking-wide">{p.label}</div>
+            <div class="mt-1.5 text-sm flex items-center gap-3 flex-wrap">
+              <a href={`tel:${p.href}`} class="link-underline">{p.value}</a>
+              <span class="text-ivory-faint">·</span>
+              <a href={`https://wa.me/${p.href.replace("+", "")}`} target="_blank" rel="noopener" class="link-underline">WhatsApp</a>
+            </div>
+          </div>
+        ))}
+        <div class="rounded-2xl border border-canvas-line bg-canvas-soft p-5">
+          <div class="text-ivory-faint text-xs uppercase tracking-wide">Adresse</div>
+          <div class="mt-1.5 text-sm">{company.addressLine}</div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<script define:vars={{ email: company.email }}>
+  const form = document.getElementById("contact-form");
+  form?.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const data = new FormData(form);
+    const lines = [
+      `Unternehmen: ${data.get("company") || "-"}`,
+      `Telefon: ${data.get("phone") || "-"}`,
+      `Thema: ${data.get("topic")}`,
+      "",
+      String(data.get("message") || ""),
+    ];
+    const subject = encodeURIComponent(`Potenzialanalyse-Anfrage von ${data.get("name")}`);
+    const body = encodeURIComponent(lines.join("\n"));
+    window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
+  });
+</script>
+
+<style>
+  .form-input {
+    background: var(--color-canvas-soft);
+    border: 1px solid var(--color-canvas-line);
+    border-radius: 0.75rem;
+    padding: 0.75rem 1rem;
+    font-size: 0.94rem;
+    color: var(--color-ivory);
+    transition: border-color 0.25s ease;
+  }
+  .form-input:focus {
+    border-color: var(--color-lime);
+    outline: none;
+  }
+</style>

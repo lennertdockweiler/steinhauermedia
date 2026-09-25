@@ -1,0 +1,90 @@
+---
+import { company } from "../data/site";
+
+interface Crumb { label: string; slug?: string }
+interface Props {
+  title: string;
+  description: string;
+  slug?: string; // "" for home, "kontakt" etc.
+  crumbs?: Crumb[];
+}
+const { title, description, slug = "", crumbs = [] } = Astro.props;
+
+const siteUrl = "https://steinhauermedia.de";
+const canonical = slug ? `${siteUrl}/${slug}/` : `${siteUrl}/`;
+const ogImage = `${siteUrl}/images/og-placeholder.png`;
+const orgId = `${siteUrl}/#organization`;
+
+const org = {
+  "@context": "https://schema.org",
+  "@type": ["ProfessionalService", "Organization"],
+  "@id": orgId,
+  name: company.name,
+  url: `${siteUrl}/`,
+  logo: `${siteUrl}/images/logo.png`,
+  image: `${siteUrl}/images/logo.png`,
+  email: company.email,
+  telephone: company.phones[0].value,
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: company.address.street,
+    postalCode: company.address.postalCode,
+    addressLocality: company.address.city,
+    addressCountry: company.address.country,
+  },
+  areaServed: ["Konstanz", "Bodensee"],
+  sameAs: [company.instagram],
+};
+
+const website = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: company.name,
+  url: `${siteUrl}/`,
+  inLanguage: company.language,
+  publisher: { "@id": orgId },
+};
+
+const jsonLdBlocks: Record<string, unknown>[] = [org, website];
+
+if (crumbs.length) {
+  const items = [{ "@type": "ListItem", position: 1, name: "Startseite", item: `${siteUrl}/` }];
+  crumbs.forEach((c, i) => {
+    items.push({
+      "@type": "ListItem",
+      position: i + 2,
+      name: c.label,
+      item: c.slug !== undefined ? `${siteUrl}/${c.slug}${c.slug ? "/" : ""}` : canonical,
+    });
+  });
+  jsonLdBlocks.push({
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: items,
+  });
+}
+---
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>{title}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+<meta name="theme-color" content="#0B0B0C" />
+<link rel="icon" href="/images/logo.png" />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:type" content="website" />
+<meta property="og:image" content={ogImage} />
+<meta property="og:site_name" content={company.name} />
+<meta property="og:locale" content={company.locale} />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImage} />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+{jsonLdBlocks.map((block) => (
+  <script type="application/ld+json" set:html={JSON.stringify(block)} />
+))}

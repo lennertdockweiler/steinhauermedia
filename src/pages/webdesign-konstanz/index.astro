@@ -1,0 +1,31 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import PageHero from "../../components/PageHero.astro";
+import ServiceDetail from "../../components/ServiceDetail.astro";
+import WebsiteDemo from "../../components/WebsiteDemo.astro";
+import CtaSection from "../../components/CtaSection.astro";
+import { services } from "../../data/site";
+
+const service = services.find((s) => s.slug === "webdesign-konstanz")!;
+---
+<Layout
+  title="Webdesign Konstanz | Steinhauer Media"
+  description="Steinhauer Media entwickelt schnelle, mobiloptimierte Websites mit interaktiver Live-Vorschau vor Beauftragung – für Unternehmen in Konstanz und am Bodensee."
+  slug="webdesign-konstanz"
+  navActive="leistungen"
+  crumbs={[{ label: "Leistungen", slug: "leistungen" }, { label: "Webdesign" }]}
+>
+  <PageHero
+    kicker="Leistungen · 03"
+    heading={service.heading}
+    lead={service.lead}
+    crumbs={[{ label: "Leistungen", slug: "leistungen" }, { label: "Webdesign" }]}
+  />
+  <ServiceDetail service={service}>
+    <WebsiteDemo
+      heading="Nicht nur ansehen. Direkt ausprobieren."
+      lead="Für ausgewählte Projekte erstellen wir bereits vor der finalen Entscheidung einen klickbaren Prototyp. So sehen Sie nicht nur ein Konzept – Sie erleben bereits, wie Ihre zukünftige Website funktionieren könnte."
+    />
+  </ServiceDetail>
+  <CtaSection heading="Bereit für den ersten Schritt?" buttonLabel={service.ctaText} />
+</Layout>

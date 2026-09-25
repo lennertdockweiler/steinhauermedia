@@ -1,0 +1,119 @@
+---
+import { services, navLinks } from "../data/site";
+
+interface Props {
+  active?: string;
+  variant?: "dark" | "light";
+}
+const { active = "", variant = "dark" } = Astro.props;
+---
+
+<a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[70] focus:bg-lime focus:text-ink focus:px-4 focus:py-2 focus:rounded-full">Zum Inhalt springen</a>
+
+<header
+  id="site-nav"
+  data-variant={variant}
+  class="fixed top-0 inset-x-0 z-50 transition-colors duration-300"
+>
+  <div class="wrap flex items-center justify-between h-[76px]">
+    <a href="/" class="flex items-center gap-2.5 shrink-0">
+      <img src="/images/logo.png" alt="Steinhauer Media" width="26" height="26" class="rounded-sm" />
+      <span class="font-display text-[0.92rem] tracking-[0.06em] font-semibold">STEINHAUER MEDIA</span>
+    </a>
+
+    <nav class="hidden md:flex items-center gap-8 font-medium text-[0.94rem]" aria-label="Hauptnavigation">
+      <div class="relative group">
+        <button type="button" id="leistungen-trigger" aria-haspopup="true" aria-expanded="false" class={`flex items-center gap-1.5 py-2 ${active === "leistungen" ? "text-lime" : ""}`}>
+          Leistungen
+          <svg class="w-3 h-3 transition-transform duration-300 group-[.open]:rotate-180" viewBox="0 0 12 12" fill="none" stroke="currentColor"><path d="M2.5 4.5L6 8L9.5 4.5" stroke-width="1.4" stroke-linecap="round" /></svg>
+        </button>
+        <div id="leistungen-menu" class="invisible opacity-0 translate-y-1 group-[.open]:visible group-[.open]:opacity-100 group-[.open]:translate-y-0 transition-all duration-250 absolute left-1/2 -translate-x-1/2 top-full mt-3 w-[300px] rounded-2xl border border-canvas-line bg-canvas-soft p-2 shadow-2xl">
+          {services.map((s) => (
+            <a href={`/${s.slug}/`} class="flex items-center justify-between gap-3 rounded-xl px-3.5 py-3 text-[0.9rem] hover:bg-white/5 transition-colors">
+              <span>{s.name}</span>
+              <span class="text-ivory-faint text-xs">{s.num}</span>
+            </a>
+          ))}
+          <a href="/leistungen/" class="flex items-center gap-2 rounded-xl px-3.5 py-3 text-[0.85rem] text-ivory-dim border-t border-canvas-line mt-1 hover:text-lime transition-colors">Leistungsübersicht</a>
+        </div>
+      </div>
+      {navLinks.map((l) => (
+        <a href={`/${l.slug}/`} class={`py-2 transition-colors hover:text-lime ${active === l.slug ? "text-lime" : ""}`}>{l.label}</a>
+      ))}
+    </nav>
+
+    <div class="flex items-center gap-3">
+      <a href="/kontakt/" class="hidden md:inline-flex btn btn-primary py-2.5! px-5! text-[0.85rem]!" data-magnetic>Kostenlose Potenzialanalyse</a>
+      <button id="nav-toggle" aria-label="Menü öffnen" aria-expanded="false" aria-controls="mobile-menu" class="md:hidden relative w-10 h-10 flex items-center justify-center">
+        <span class="sr-only">Menü</span>
+        <span id="burger" class="block w-5 relative">
+          <span class="block h-[1.5px] w-full bg-current transition-transform duration-300"></span>
+          <span class="block h-[1.5px] w-full bg-current mt-[6px] transition-opacity duration-300"></span>
+          <span class="block h-[1.5px] w-full bg-current mt-[6px] transition-transform duration-300"></span>
+        </span>
+      </button>
+    </div>
+  </div>
+
+  <div id="mobile-menu" class="md:hidden hidden bg-canvas border-t border-canvas-line">
+    <div class="wrap py-6 flex flex-col gap-1 text-[1.05rem]">
+      <a href="/kontakt/" class="btn btn-primary justify-center mb-4">Kostenlose Potenzialanalyse</a>
+      <button id="mobile-leistungen-trigger" aria-expanded="false" class="flex items-center justify-between py-3 border-b border-canvas-line">
+        <span>Leistungen</span>
+        <span class="text-lg">+</span>
+      </button>
+      <div id="mobile-leistungen-submenu" class="hidden pl-4 flex flex-col gap-3 py-3 border-b border-canvas-line text-ivory-dim">
+        {services.map((s) => <a href={`/${s.slug}/`}>{s.name}</a>)}
+        <a href="/leistungen/">Leistungsübersicht</a>
+      </div>
+      {navLinks.map((l) => (
+        <a href={`/${l.slug}/`} class="py-3 border-b border-canvas-line">{l.label}</a>
+      ))}
+    </div>
+  </div>
+</header>
+
+<script>
+  const trigger = document.getElementById("leistungen-trigger");
+  const group = trigger?.closest(".group");
+  let closeTimer: number | undefined;
+  const open = () => { window.clearTimeout(closeTimer); group?.classList.add("open"); trigger?.setAttribute("aria-expanded", "true"); };
+  const close = () => { closeTimer = window.setTimeout(() => { group?.classList.remove("open"); trigger?.setAttribute("aria-expanded", "false"); }, 150); };
+  group?.addEventListener("mouseenter", open);
+  group?.addEventListener("mouseleave", close);
+  trigger?.addEventListener("click", () => group?.classList.contains("open") ? close() : open());
+
+  const navToggle = document.getElementById("nav-toggle");
+  const mobileMenu = document.getElementById("mobile-menu");
+  navToggle?.addEventListener("click", () => {
+    const isOpen = mobileMenu?.classList.toggle("hidden") === false;
+    navToggle.setAttribute("aria-expanded", String(isOpen));
+    document.getElementById("burger")?.classList.toggle("burger-open", isOpen);
+  });
+
+  const mTrigger = document.getElementById("mobile-leistungen-trigger");
+  const mSub = document.getElementById("mobile-leistungen-submenu");
+  mTrigger?.addEventListener("click", () => {
+    const isOpen = mSub?.classList.toggle("hidden") === false;
+    mTrigger.setAttribute("aria-expanded", String(isOpen));
+  });
+
+  const header = document.getElementById("site-nav");
+  const onScroll = () => {
+    if (!header) return;
+    if (window.scrollY > 12) header.classList.add("nav-scrolled");
+    else header.classList.remove("nav-scrolled");
+  };
+  onScroll();
+  document.addEventListener("scroll", onScroll, { passive: true });
+</script>
+
+<style>
+  #site-nav { color: var(--color-ivory); }
+  #site-nav.nav-scrolled { background: rgba(11,11,12,0.82); backdrop-filter: blur(14px); border-bottom: 1px solid var(--color-canvas-line); }
+  #site-nav[data-variant="light"] { color: var(--color-ink); }
+  #site-nav[data-variant="light"].nav-scrolled { background: rgba(245,242,236,0.86); border-bottom: 1px solid var(--color-graphite-line); }
+  #burger.burger-open span:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
+  #burger.burger-open span:nth-child(2) { opacity: 0; }
+  #burger.burger-open span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
+</style>

@@ -1,0 +1,39 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import PageHero from "../../components/PageHero.astro";
+import { company } from "../../data/site";
+
+const legalName = company.legalName || "[Vertretungsberechtigte Person / Rechtsform – bitte ergänzen]";
+---
+<Layout
+  title="Datenschutz | Steinhauer Media"
+  description="Datenschutzerklärung von Steinhauer Media."
+  slug="datenschutz"
+  crumbs={[{ label: "Datenschutz" }]}
+>
+  <PageHero kicker="Rechtliches" heading="Datenschutzerklärung" crumbs={[{ label: "Datenschutz" }]} />
+  <section class="pb-24 md:pb-32">
+    <div class="wrap max-w-2xl prose-legal">
+      <h2>Verantwortlicher</h2>
+      <p>{legalName}<br />{company.addressLine}<br />E-Mail: <a href={`mailto:${company.email}`} class="link-underline">{company.email}</a></p>
+
+      <h2>Kontaktformular</h2>
+      <p>Das Kontaktformular auf dieser Website öffnet beim Absenden Ihr lokales E-Mail-Programm mit einer vorausgefüllten Nachricht an {company.email} (mailto-Link). Ihre Eingaben werden dabei nicht an einen Server dieser Website übertragen oder dort gespeichert; die Übermittlung erfolgt ausschließlich über Ihr E-Mail-Programm, sobald Sie die E-Mail selbst versenden.</p>
+
+      <h2>Eingebundene Inhalte Dritter</h2>
+      <p>Auf den Seiten „Referenzen" und „Webdesign" binden wir einen interaktiven Live-Prototyp per iframe von einer eigenen Subdomain (steinhauermedia.de) ein. Beim Laden dieser Seiten kann eine Verbindung zu diesem Server aufgebaut werden. Zudem verlinken wir auf unser Instagram-Profil; beim Anklicken dieses externen Links gelten die Datenschutzbestimmungen von Meta/Instagram. Schriftarten werden über Google Fonts eingebunden, wobei eine Verbindung zu Servern von Google entstehen kann.</p>
+
+      <h2>Cookies &amp; Analyse-Tools</h2>
+      <p>Diese Website setzt aktuell keine Cookies und verwendet keine Analyse- oder Tracking-Tools.</p>
+
+      <h2>Ihre Rechte</h2>
+      <p>Sie haben jederzeit das Recht auf Auskunft, Berichtigung, Löschung oder Einschränkung der Verarbeitung Ihrer bei uns gespeicherten personenbezogenen Daten sowie ein Beschwerderecht bei einer Datenschutz-Aufsichtsbehörde. Wenden Sie sich hierzu an {company.email}.</p>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .prose-legal h2 { font-size: 1.1rem; font-weight: 600; margin-top: 2.4rem; }
+  .prose-legal h2:first-child { margin-top: 0; }
+  .prose-legal p { color: var(--color-ivory-dim); margin-top: 0.9rem; line-height: 1.7; font-size: 0.95rem; }
+</style>

@@ -1,0 +1,56 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import PageHero from "../../components/PageHero.astro";
+import TeamStrip from "../../components/TeamStrip.astro";
+import RelatedLinks from "../../components/RelatedLinks.astro";
+import CtaSection from "../../components/CtaSection.astro";
+import { principles } from "../../data/site";
+---
+<Layout
+  title="Über uns | Steinhauer Media Konstanz"
+  description="Shawn und Lennert sind Steinhauer Media: zwei Spezialisten für Social-Media-Content und Performance-Marketing mit Sitz am Bodensee."
+  slug="ueber-uns"
+  navActive="ueber-uns"
+  crumbs={[{ label: "Über uns" }]}
+>
+  <PageHero
+    kicker="Über uns"
+    heading="Zwei Spezialisten. Ein Ansprechpartner für Ihre digitale Sichtbarkeit."
+    lead="Zwei Spezialisten, ein System: Content, der gesehen wird, und Performance, die sich rechnet."
+    crumbs={[{ label: "Über uns" }]}
+  />
+
+  <section class="pb-20 md:pb-24">
+    <div class="wrap">
+      <TeamStrip detailed />
+    </div>
+  </section>
+
+  <section class="pb-20 md:pb-24">
+    <div class="wrap">
+      <div class="reveal rounded-2xl overflow-hidden border border-canvas-line">
+        <img src="/images/team-group.jpg" alt="Shawn und Lennert, die Gründer von Steinhauer Media" width="1200" height="800" loading="lazy" class="w-full h-auto" />
+      </div>
+    </div>
+  </section>
+
+  <section class="pb-24 md:pb-32 bg-canvas-soft border-y border-canvas-line pt-20">
+    <div class="wrap">
+      <div class="reveal max-w-lg mb-12">
+        <h2 class="text-[clamp(1.6rem,3.4vw,2.2rem)]">Warum wir schneller liefern als klassische Agenturen.</h2>
+      </div>
+      <div class="reveal-stagger grid md:grid-cols-3 gap-8">
+        {principles.map((p) => (
+          <div>
+            <div class="font-display text-lime text-sm mb-3">{p.n}</div>
+            <h3 class="font-display text-lg font-semibold">{p.heading}</h3>
+            <p class="text-ivory-dim text-sm mt-2.5 leading-relaxed">{p.text}</p>
+          </div>
+        ))}
+      </div>
+      <RelatedLinks intro="Sehen Sie sich außerdem an:" links={[{ slug: "referenzen", label: "Referenzen" }, { slug: "kontakt", label: "Kontakt" }]} />
+    </div>
+  </section>
+
+  <CtaSection heading="Lernen Sie uns persönlich kennen." />
+</Layout>

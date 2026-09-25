@@ -1,0 +1,51 @@
+---
+import { demoUrl } from "../data/site";
+interface Props { heading?: string; lead?: string }
+const { heading, lead } = Astro.props;
+---
+<div class="reveal">
+  {heading && (
+    <div class="max-w-xl mb-8">
+      <p class="kicker">Interaktive Website-Demo</p>
+      <h2 class="mt-4 text-[clamp(1.5rem,3.2vw,2.1rem)]">{heading}</h2>
+      {lead && <p class="text-ivory-dim mt-3 text-sm leading-relaxed">{lead}</p>}
+    </div>
+  )}
+  <div class="rounded-2xl border border-canvas-line bg-canvas-soft overflow-hidden">
+    <div class="flex items-center justify-between gap-3 flex-wrap px-4 py-3 border-b border-canvas-line">
+      <div class="flex gap-2">
+        <button type="button" data-demo-view="desktop" class="demo-btn is-active px-3.5 py-1.5 rounded-full text-xs font-medium">🖥 Desktop</button>
+        <button type="button" data-demo-view="mobile" class="demo-btn px-3.5 py-1.5 rounded-full text-xs font-medium">📱 Smartphone</button>
+      </div>
+      <a href={demoUrl} target="_blank" rel="noopener" class="link-underline text-xs">Demo in neuem Tab öffnen</a>
+    </div>
+    <div data-demo-viewport class="bg-canvas p-4 md:p-8 flex justify-center">
+      <iframe src={demoUrl} title="Interaktive Website-Demo" loading="lazy" class="w-full h-[520px] rounded-lg border border-canvas-line bg-white transition-all duration-500" style="max-width: 100%;"></iframe>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>("[data-demo-viewport]").forEach((viewport) => {
+    const wrapper = viewport.closest("div.rounded-2xl");
+    const iframe = viewport.querySelector("iframe") as HTMLIFrameElement | null;
+    const buttons = wrapper?.querySelectorAll<HTMLButtonElement>("[data-demo-view]");
+    buttons?.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        buttons.forEach((b) => b.classList.remove("is-active"));
+        btn.classList.add("is-active");
+        if (!iframe) return;
+        if (btn.dataset.demoView === "mobile") {
+          iframe.style.maxWidth = "390px";
+        } else {
+          iframe.style.maxWidth = "100%";
+        }
+      });
+    });
+  });
+</script>
+
+<style>
+  .demo-btn { color: var(--color-ivory-dim); border: 1px solid transparent; }
+  .demo-btn.is-active { background: var(--color-lime); color: var(--color-ink); }
+</style>

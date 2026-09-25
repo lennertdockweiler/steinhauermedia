@@ -1,0 +1,25 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import PageHero from "../../components/PageHero.astro";
+import ServiceDetail from "../../components/ServiceDetail.astro";
+import CtaSection from "../../components/CtaSection.astro";
+import { services } from "../../data/site";
+
+const service = services.find((s) => s.slug === "seo-agentur-konstanz")!;
+---
+<Layout
+  title="SEO Agentur Konstanz | Steinhauer Media"
+  description="SEO & GEO für lokale Sichtbarkeit: Steinhauer Media optimiert Website, Content und Google-Unternehmensprofil für Unternehmen in Konstanz und am Bodensee."
+  slug="seo-agentur-konstanz"
+  navActive="leistungen"
+  crumbs={[{ label: "Leistungen", slug: "leistungen" }, { label: "SEO & GEO" }]}
+>
+  <PageHero
+    kicker="Leistungen · 04"
+    heading={service.heading}
+    lead={service.lead}
+    crumbs={[{ label: "Leistungen", slug: "leistungen" }, { label: "SEO & GEO" }]}
+  />
+  <ServiceDetail service={service} />
+  <CtaSection heading="Bereit für den ersten Schritt?" buttonLabel={service.ctaText} />
+</Layout>

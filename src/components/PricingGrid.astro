@@ -1,0 +1,27 @@
+---
+import Icon from "./Icon.astro";
+import { pricing, company } from "../data/site";
+interface Props { withCta?: boolean }
+const { withCta = false } = Astro.props;
+---
+<div class="reveal-stagger grid md:grid-cols-3 gap-5 items-stretch">
+  {pricing.map((tier) => (
+    <div class={`relative rounded-2xl p-7 flex flex-col border ${tier.featured ? "bg-ivory text-ink border-lime" : "bg-canvas-soft border-canvas-line"}`}>
+      {tier.featured && <span class="absolute top-5 right-5 text-[0.68rem] tracking-wide uppercase bg-ink text-ivory rounded-full px-3 py-1">Meistgewählt</span>}
+      <h3 class="font-display text-xl font-semibold">{tier.name}</h3>
+      <p class={`text-sm mt-1.5 ${tier.featured ? "text-graphite" : "text-ivory-dim"}`}>{tier.tagline}</p>
+      <ul class="mt-6 flex flex-col gap-3 text-sm">
+        {tier.features.map((f) => (
+          <li class="flex items-start gap-2.5">
+            <Icon name="check" class={`w-4 h-4 mt-0.5 shrink-0 ${tier.featured ? "text-[#5c7a00]" : "text-lime"}`} />
+            <span>{f}</span>
+          </li>
+        ))}
+      </ul>
+      <p class={`text-[0.85rem] mt-auto pt-6 ${tier.featured ? "text-graphite" : "text-ivory-dim"}`}>Für wen geeignet? {tier.fit}</p>
+      {withCta && (
+        <a href={`mailto:${company.email}`} class={`btn justify-center mt-5 ${tier.featured ? "btn-primary" : "btn-ghost"}`}>Kostenloses Angebot</a>
+      )}
+    </div>
+  ))}
+</div>

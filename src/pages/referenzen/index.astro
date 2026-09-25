@@ -1,0 +1,77 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import PageHero from "../../components/PageHero.astro";
+import LogoMarquee from "../../components/LogoMarquee.astro";
+import CaseStats from "../../components/CaseStats.astro";
+import RelatedLinks from "../../components/RelatedLinks.astro";
+import UpcomingCase from "../../components/UpcomingCase.astro";
+import WebsiteDemo from "../../components/WebsiteDemo.astro";
+import CtaSection from "../../components/CtaSection.astro";
+import { flagshipCase, upcomingCases } from "../../data/site";
+---
+<Layout
+  title="Referenzen & Ergebnisse | Steinhauer Media"
+  description="Ausgewählte Projekte von Steinhauer Media – darunter eine Kampagne mit 142 Anfragen bei 17,60 € pro Lead für einen Kunden im Bereich dauerhafte Haarentfernung."
+  slug="referenzen"
+  navActive="referenzen"
+  crumbs={[{ label: "Referenzen" }]}
+>
+  <PageHero
+    kicker="Referenzen"
+    heading="Ergebnisse statt Eitelkeits-Metriken."
+    lead="Ausgewählte Projekte und Kampagnen, die zeigen, wie wir arbeiten."
+    crumbs={[{ label: "Referenzen" }]}
+  />
+
+  <section class="pb-16">
+    <div class="wrap">
+      <p class="reveal text-ivory-dim text-sm mb-8">Vertraut von</p>
+      <LogoMarquee />
+    </div>
+  </section>
+
+  <section id="case-google-ads" class="pb-24 md:pb-28">
+    <div class="wrap">
+      <div class="reveal max-w-xl">
+        <h2 class="text-[clamp(1.6rem,3.6vw,2.3rem)]">{flagshipCase.title}</h2>
+        <p class="text-ivory-dim mt-3 text-sm">{flagshipCase.subtitle}</p>
+      </div>
+      <CaseStats stats={flagshipCase.stats} class="mt-10" />
+      <div class="reveal-stagger grid sm:grid-cols-2 md:grid-cols-4 gap-8 mt-14">
+        {flagshipCase.breakdown.map((b) => (
+          <div>
+            <h3 class="font-display text-sm font-semibold uppercase tracking-wide text-ivory-faint">{b.heading}</h3>
+            <p class="text-ivory-dim text-sm mt-2.5 leading-relaxed">{b.text}</p>
+          </div>
+        ))}
+      </div>
+      <RelatedLinks intro="Passende Leistung:" links={[{ slug: "google-ads-agentur-konstanz", label: "Google & Meta Ads" }]} />
+    </div>
+  </section>
+
+  <section class="pb-24 md:pb-28">
+    <div class="wrap">
+      <div class="reveal max-w-xl mb-10">
+        <p class="kicker">Weitere Projekte</p>
+        <h2 class="mt-4 text-[clamp(1.5rem,3.2vw,2.1rem)]">Case Studies in Vorbereitung.</h2>
+        <p class="text-ivory-dim mt-3 text-sm leading-relaxed">Diese Projekte laufen bereits — die vollständigen Ergebnisse veröffentlichen wir hier, sobald sie final ausgewertet und freigegeben sind.</p>
+      </div>
+      <div class="reveal-stagger grid md:grid-cols-2 gap-5">
+        {upcomingCases.map((c) => (
+          <UpcomingCase id={c.id} name={c.name} category={c.category} blurb={c.blurb} fields={c.fields} related={c.related} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="pb-24 md:pb-32">
+    <div class="wrap">
+      <WebsiteDemo
+        heading="Interaktive Webseiten-Vorschau"
+        lead="Statt PDF-Konzepten liefern wir einen echten, klickbaren Live-Prototyp — direkt am Smartphone oder Desktop testbar, bevor überhaupt eine Entscheidung fällt."
+      />
+    </div>
+  </section>
+
+  <CtaSection heading="Ihr Projekt könnte das nächste sein." />
+</Layout>

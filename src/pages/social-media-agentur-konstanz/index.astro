@@ -1,0 +1,29 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import PageHero from "../../components/PageHero.astro";
+import ServiceDetail from "../../components/ServiceDetail.astro";
+import UpcomingCase from "../../components/UpcomingCase.astro";
+import CtaSection from "../../components/CtaSection.astro";
+import { services, upcomingCases } from "../../data/site";
+
+const service = services.find((s) => s.slug === "social-media-agentur-konstanz")!;
+const kase = upcomingCases.find((c) => c.id === "case-club-aktiv")!;
+---
+<Layout
+  title="Social Media Agentur Konstanz | Steinhauer Media"
+  description="Steinhauer Media produziert organische Short-Form-Videos und Social-Media-Content für Unternehmen in Konstanz und am Bodensee – von Skript bis Schnitt."
+  slug="social-media-agentur-konstanz"
+  navActive="leistungen"
+  crumbs={[{ label: "Leistungen", slug: "leistungen" }, { label: "Social Media" }]}
+>
+  <PageHero
+    kicker="Leistungen · 01"
+    heading={service.heading}
+    lead={service.lead}
+    crumbs={[{ label: "Leistungen", slug: "leistungen" }, { label: "Social Media" }]}
+  />
+  <ServiceDetail service={service}>
+    <UpcomingCase id={kase.id} name={kase.name} category={kase.category} blurb={kase.blurb} related={kase.related} />
+  </ServiceDetail>
+  <CtaSection heading="Bereit für den ersten Schritt?" buttonLabel={service.ctaText} />
+</Layout>

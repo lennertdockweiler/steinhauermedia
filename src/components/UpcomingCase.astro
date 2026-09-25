@@ -1,0 +1,20 @@
+---
+import RelatedLinks from "./RelatedLinks.astro";
+interface Props {
+  id?: string;
+  name: string;
+  category: string;
+  blurb: string;
+  fields?: string;
+  related?: { slug: string; label: string };
+}
+const { id, name, category, blurb, fields, related } = Astro.props;
+---
+<div class="reveal rounded-2xl border border-dashed border-canvas-line p-7" id={id}>
+  <span class="inline-block text-[0.7rem] tracking-wide uppercase text-ivory-faint border border-canvas-line rounded-full px-3 py-1">Case Study folgt</span>
+  <h3 class="font-display text-lg font-semibold mt-4">{name}</h3>
+  <p class="text-ivory-faint text-xs tracking-wide uppercase mt-1.5">{category}</p>
+  <p class="text-ivory-dim text-sm mt-4 leading-relaxed">{blurb}</p>
+  {fields && <p class="text-ivory-faint text-xs mt-5 leading-relaxed">{fields}</p>}
+  {related && <RelatedLinks intro="Passende Leistung:" links={[related]} />}
+</div>

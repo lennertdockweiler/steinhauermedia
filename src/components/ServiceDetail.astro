@@ -1,0 +1,46 @@
+---
+import Icon from "./Icon.astro";
+import RelatedLinks from "./RelatedLinks.astro";
+import type { Service } from "../data/site";
+interface Props { service: Service }
+const { service } = Astro.props;
+---
+<section class="pb-16 md:pb-20">
+  <div class="wrap">
+    <div class="grid md:grid-cols-[auto_1fr] gap-10 md:gap-16 items-start">
+      <div class="reveal w-16 h-16 rounded-2xl bg-canvas-soft border border-canvas-line flex items-center justify-center shrink-0">
+        <Icon name={service.icon} class="w-8 h-8 text-lime" />
+      </div>
+      <div class="reveal max-w-2xl">
+        <ul class="grid sm:grid-cols-2 gap-x-8 gap-y-3 text-[0.95rem]">
+          {service.bullets.map((b) => (
+            <li class="flex items-center gap-2.5">
+              <Icon name="check" class="w-4 h-4 text-lime shrink-0" />
+              {b}
+            </li>
+          ))}
+        </ul>
+        {service.note && <p class="text-ivory-dim text-sm mt-6">{service.note}</p>}
+        <RelatedLinks intro="Passt gut dazu:" links={service.related} />
+      </div>
+    </div>
+
+    {service.workflow && (
+      <div class="reveal mt-16 flex flex-wrap items-center gap-x-2 gap-y-4">
+        {service.workflow.map((step, i) => (
+          <>
+            <div class="flex items-center gap-2.5 rounded-full border border-canvas-line bg-canvas-soft px-4 py-2 text-sm">
+              <span class="text-lime font-display text-xs">{String(i + 1).padStart(2, "0")}</span>
+              {step}
+            </div>
+            {i < service.workflow!.length - 1 && <span class="text-ivory-faint" aria-hidden="true">→</span>}
+          </>
+        ))}
+      </div>
+    )}
+
+    <div class="mt-16">
+      <slot />
+    </div>
+  </div>
+</section>

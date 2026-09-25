@@ -1,0 +1,12 @@
+---
+interface Props { intro: string; links: { slug: string; label: string }[] }
+const { intro, links } = Astro.props;
+---
+<p class="text-ivory-dim text-sm mt-8">
+  {intro}{" "}
+  {links.map((l, i) => (
+    <>
+      <a href={`/${l.slug}/`} class="link-underline text-ivory">{l.label}</a>{i < links.length - 1 ? ", " : "."}
+    </>
+  ))}
+</p>

@@ -1,0 +1,27 @@
+---
+interface Crumb { label: string; slug?: string }
+interface Props { kicker: string; heading: string; lead?: string; crumbs?: Crumb[] }
+const { kicker, heading, lead, crumbs = [] } = Astro.props;
+---
+<section class="pt-40 pb-16 md:pt-48 md:pb-20">
+  <div class="wrap">
+    {crumbs.length > 0 && (
+      <nav aria-label="Breadcrumb" class="mb-8">
+        <ol class="flex flex-wrap items-center gap-2 text-xs text-ivory-faint">
+          <li><a href="/" class="hover:text-lime transition-colors">Startseite</a></li>
+          {crumbs.map((c, i) => (
+            <>
+              <li aria-hidden="true">/</li>
+              <li aria-current={i === crumbs.length - 1 ? "page" : undefined}>
+                {c.slug !== undefined ? <a href={`/${c.slug}/`} class="hover:text-lime transition-colors">{c.label}</a> : <span class="text-ivory-dim">{c.label}</span>}
+              </li>
+            </>
+          ))}
+        </ol>
+      </nav>
+    )}
+    <p class="kicker">{kicker}</p>
+    <h1 class="mt-4 text-[clamp(2rem,5vw,3.4rem)] max-w-3xl">{heading}</h1>
+    {lead && <p class="text-ivory-dim mt-5 max-w-xl text-[1.05rem] leading-relaxed">{lead}</p>}
+  </div>
+</section>

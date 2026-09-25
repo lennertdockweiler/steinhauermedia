@@ -1,0 +1,37 @@
+---
+import { processSteps } from "../data/site";
+---
+<section data-process class="relative" style={`height: ${processSteps.length * 60}vh;`}>
+  <div data-process-pin class="h-screen flex items-center overflow-hidden">
+    <div class="wrap w-full">
+      <div class="grid md:grid-cols-2 gap-14 items-center">
+        <div class="reveal">
+          <div data-process-index class="font-display text-lime text-sm tracking-[0.1em] mb-5">01 / {String(processSteps.length).padStart(2, "0")}</div>
+          <h2 class="text-[clamp(1.7rem,3.2vw,2.6rem)]">Social Media, das planbar Kunden bringt.</h2>
+          <p class="text-ivory-dim mt-4 max-w-sm">Von der ersten Idee bis zum Umsatz — ein durchdachter Prozess statt Zufallstreffer.</p>
+          <div class="h-[2px] w-full bg-canvas-line mt-8 rounded-full overflow-hidden">
+            <i data-process-fill class="block h-full bg-lime rounded-full" style="width: 0%; transition: width 0.3s ease;"></i>
+          </div>
+        </div>
+        <div class="flex flex-col gap-1">
+          {processSteps.map((step, i) => (
+            <div
+              data-process-step
+              class={`process-step border-l-2 pl-6 py-4 transition-all duration-500 ${i === 0 ? "is-active" : ""}`}
+            >
+              <span class="font-display text-xs tracking-[0.15em] text-ivory-faint process-num">{step.num}</span>
+              <h3 class="font-display text-lg font-semibold mt-1.5">{step.heading}</h3>
+              <p class="text-ivory-dim text-sm mt-1.5 leading-relaxed process-text">{step.text}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .process-step { border-color: var(--color-canvas-line); opacity: 0.4; }
+  .process-step.is-active { border-color: var(--color-lime); opacity: 1; }
+  .process-step.is-active .process-num { color: var(--color-lime); }
+</style>

@@ -1,0 +1,29 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import PageHero from "../../components/PageHero.astro";
+import ServiceDetail from "../../components/ServiceDetail.astro";
+import UpcomingCase from "../../components/UpcomingCase.astro";
+import CtaSection from "../../components/CtaSection.astro";
+import { services, upcomingCases } from "../../data/site";
+
+const service = services.find((s) => s.slug === "social-recruiting")!;
+const kase = upcomingCases.find((c) => c.id === "case-polywerft")!;
+---
+<Layout
+  title="Social Recruiting | Steinhauer Media"
+  description="Authentische Recruiting-Reels gegen den Fachkräftemangel: Steinhauer Media zeigt Team und Arbeitsalltag Ihres Unternehmens für mehr Bewerbungen."
+  slug="social-recruiting"
+  navActive="leistungen"
+  crumbs={[{ label: "Leistungen", slug: "leistungen" }, { label: "Social Recruiting" }]}
+>
+  <PageHero
+    kicker="Leistungen · 02"
+    heading={service.heading}
+    lead={service.lead}
+    crumbs={[{ label: "Leistungen", slug: "leistungen" }, { label: "Social Recruiting" }]}
+  />
+  <ServiceDetail service={service}>
+    <UpcomingCase id={kase.id} name={kase.name} category={kase.category} blurb={kase.blurb} related={kase.related} />
+  </ServiceDetail>
+  <CtaSection heading="Bereit für den ersten Schritt?" buttonLabel={service.ctaText} />
+</Layout>
