@@ -1,17 +1,21 @@
 @import "tailwindcss";
 
 @theme {
-  --color-canvas: #0b0b0c;
-  --color-canvas-soft: #141417;
-  --color-canvas-line: #212124;
-  --color-ivory: #f5f2ec;
-  --color-ivory-dim: #b9b6ae;
-  --color-ivory-faint: #8a8781;
-  --color-lime: #cbff4d;
-  --color-lime-bright: #e4ff9c;
-  --color-ink: #14140f;
-  --color-graphite: #6b6862;
-  --color-graphite-line: #e7e4db;
+  /* Original Steinhauer Media brand palette (dark ink + warm ivory —
+     called "gold" in the original codebase, though it's a monochrome
+     ink/ivory system rather than a literal gold hue) instead of the
+     lime-accent relaunch palette. */
+  --color-canvas: #15130e;
+  --color-canvas-soft: #2a251c;
+  --color-canvas-line: #3a3325;
+  --color-ivory: #f6f1e4;
+  --color-ivory-dim: #86827a;
+  --color-ivory-faint: #6f6c64;
+  --color-lime: #f6f1e4;
+  --color-lime-bright: #ffffff;
+  --color-ink: #1e1b15;
+  --color-graphite: #5b5747;
+  --color-graphite-line: #d9d4c5;
 
   --font-display: "Space Grotesk", "Inter", sans-serif;
   --font-sans: "Inter", "Helvetica Neue", sans-serif;
@@ -91,7 +95,7 @@
   }
 
   .surface-light .kicker {
-    color: #5c7a00;
+    color: var(--color-ink);
   }
 
   .btn {
@@ -119,14 +123,14 @@
   .btn-ghost {
     background: transparent;
     color: var(--color-ivory);
-    border-color: rgba(245, 242, 236, 0.22);
+    border-color: rgba(246, 241, 228, 0.22);
   }
   .btn-ghost:hover {
     border-color: var(--color-ivory);
   }
   .surface-light .btn-ghost {
     color: var(--color-ink);
-    border-color: rgba(20, 20, 15, 0.18);
+    border-color: rgba(30, 27, 21, 0.18);
   }
   .surface-light .btn-ghost:hover {
     border-color: var(--color-ink);
