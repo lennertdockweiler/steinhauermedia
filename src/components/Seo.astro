@@ -1,5 +1,6 @@
 ---
 import { company } from "../data/site";
+import { url } from "../lib/url";
 
 interface Crumb { label: string; slug?: string }
 interface Props {
@@ -70,7 +71,7 @@ if (crumbs.length) {
 <meta name="description" content={description} />
 <link rel="canonical" href={canonical} />
 <meta name="theme-color" content="#0C0D0E" />
-<link rel="icon" href="/images/logo.png" />
+<link rel="icon" href={url("/images/logo.png")} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
 <meta property="og:url" content={canonical} />

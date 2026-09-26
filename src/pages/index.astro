@@ -9,6 +9,7 @@ import ProcessStrip from "../components/ProcessStrip.astro";
 import TeamStrip from "../components/TeamStrip.astro";
 import CtaSection from "../components/CtaSection.astro";
 import { stats, flagshipCase } from "../data/site";
+import { url } from "../lib/url";
 ---
 <Layout
   title="Steinhauer Media | Social Media & Performance Marketing Konstanz"
@@ -36,7 +37,7 @@ import { stats, flagshipCase } from "../data/site";
         Wir helfen Unternehmen am Bodensee mit Social Media, Google und Performance Marketing dabei, aus Aufmerksamkeit echte Kunden zu machen.
       </p>
       <div class="reveal mt-9 flex flex-wrap items-center gap-6">
-        <a href="/kontakt/" class="magnetic btn btn-primary" data-magnetic>Kostenlose Potenzialanalyse</a>
+        <a href={url("/kontakt/")} class="magnetic btn btn-primary" data-magnetic>Kostenlose Potenzialanalyse</a>
         <a href="#ergebnisse" class="link-underline text-ivory-dim text-sm">Unsere Ergebnisse ansehen</a>
       </div>
     </div>
@@ -84,7 +85,7 @@ import { stats, flagshipCase } from "../data/site";
       </div>
       <CaseStats stats={flagshipCase.stats} class="mt-10" />
       <div class="mt-10">
-        <a href="/referenzen/" class="link-underline text-sm">Case Study ansehen <span class="arrow">→</span></a>
+        <a href={url("/referenzen/")} class="link-underline text-sm">Case Study ansehen <span class="arrow">→</span></a>
       </div>
     </div>
   </section>
@@ -101,7 +102,7 @@ import { stats, flagshipCase } from "../data/site";
       </div>
       <TeamStrip />
       <div class="mt-8">
-        <a href="/ueber-uns/" class="link-underline text-sm">Mehr über uns <span class="arrow">→</span></a>
+        <a href={url("/ueber-uns/")} class="link-underline text-sm">Mehr über uns <span class="arrow">→</span></a>
       </div>
     </div>
   </section>

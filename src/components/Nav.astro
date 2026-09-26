@@ -1,5 +1,6 @@
 ---
 import { services, navLinks } from "../data/site";
+import { url } from "../lib/url";
 
 interface Props {
   active?: string;
@@ -16,8 +17,8 @@ const { active = "", variant = "dark" } = Astro.props;
   class="fixed top-0 inset-x-0 z-50 transition-colors duration-300"
 >
   <div class="wrap flex items-center justify-between h-[76px]">
-    <a href="/" class="flex items-center gap-2.5 shrink-0">
-      <img src="/images/logo.png" alt="Steinhauer Media" width="26" height="26" class="rounded-sm" />
+    <a href={url("/")} class="flex items-center gap-2.5 shrink-0">
+      <img src={url("/images/logo.png")} alt="Steinhauer Media" width="26" height="26" class="rounded-sm" />
       <span class="font-display text-[0.92rem] tracking-[0.06em] font-semibold">STEINHAUER MEDIA</span>
     </a>
 
@@ -29,21 +30,21 @@ const { active = "", variant = "dark" } = Astro.props;
         </button>
         <div id="leistungen-menu" class="invisible opacity-0 translate-y-1 group-[.open]:visible group-[.open]:opacity-100 group-[.open]:translate-y-0 transition-all duration-250 absolute left-1/2 -translate-x-1/2 top-full mt-3 w-[300px] rounded-2xl border border-canvas-line bg-canvas-soft p-2 shadow-2xl">
           {services.map((s) => (
-            <a href={`/${s.slug}/`} class="flex items-center justify-between gap-3 rounded-xl px-3.5 py-3 text-[0.9rem] hover:bg-white/5 transition-colors">
+            <a href={url(`/${s.slug}/`)} class="flex items-center justify-between gap-3 rounded-xl px-3.5 py-3 text-[0.9rem] hover:bg-white/5 transition-colors">
               <span>{s.name}</span>
               <span class="text-ivory-faint text-xs">{s.num}</span>
             </a>
           ))}
-          <a href="/leistungen/" class="flex items-center gap-2 rounded-xl px-3.5 py-3 text-[0.85rem] text-ivory-dim border-t border-canvas-line mt-1 hover:text-lime transition-colors">Leistungsübersicht</a>
+          <a href={url("/leistungen/")} class="flex items-center gap-2 rounded-xl px-3.5 py-3 text-[0.85rem] text-ivory-dim border-t border-canvas-line mt-1 hover:text-lime transition-colors">Leistungsübersicht</a>
         </div>
       </div>
       {navLinks.map((l) => (
-        <a href={`/${l.slug}/`} class={`py-2 transition-colors hover:text-lime ${active === l.slug ? "text-lime" : ""}`}>{l.label}</a>
+        <a href={url(`/${l.slug}/`)} class={`py-2 transition-colors hover:text-lime ${active === l.slug ? "text-lime" : ""}`}>{l.label}</a>
       ))}
     </nav>
 
     <div class="flex items-center gap-3">
-      <a href="/kontakt/" class="hidden md:inline-flex btn btn-primary py-2.5! px-5! text-[0.85rem]!" data-magnetic>Kostenlose Potenzialanalyse</a>
+      <a href={url("/kontakt/")} class="hidden md:inline-flex btn btn-primary py-2.5! px-5! text-[0.85rem]!" data-magnetic>Kostenlose Potenzialanalyse</a>
       <button id="nav-toggle" aria-label="Menü öffnen" aria-expanded="false" aria-controls="mobile-menu" class="md:hidden relative w-10 h-10 flex items-center justify-center">
         <span class="sr-only">Menü</span>
         <span id="burger" class="block w-5 relative">
@@ -57,17 +58,17 @@ const { active = "", variant = "dark" } = Astro.props;
 
   <div id="mobile-menu" class="md:hidden hidden bg-canvas border-t border-canvas-line">
     <div class="wrap py-6 flex flex-col gap-1 text-[1.05rem]">
-      <a href="/kontakt/" class="btn btn-primary justify-center mb-4">Kostenlose Potenzialanalyse</a>
+      <a href={url("/kontakt/")} class="btn btn-primary justify-center mb-4">Kostenlose Potenzialanalyse</a>
       <button id="mobile-leistungen-trigger" aria-expanded="false" class="flex items-center justify-between py-3 border-b border-canvas-line">
         <span>Leistungen</span>
         <span class="text-lg">+</span>
       </button>
       <div id="mobile-leistungen-submenu" class="hidden pl-4 flex flex-col gap-3 py-3 border-b border-canvas-line text-ivory-dim">
-        {services.map((s) => <a href={`/${s.slug}/`}>{s.name}</a>)}
-        <a href="/leistungen/">Leistungsübersicht</a>
+        {services.map((s) => <a href={url(`/${s.slug}/`)}>{s.name}</a>)}
+        <a href={url("/leistungen/")}>Leistungsübersicht</a>
       </div>
       {navLinks.map((l) => (
-        <a href={`/${l.slug}/`} class="py-3 border-b border-canvas-line">{l.label}</a>
+        <a href={url(`/${l.slug}/`)} class="py-3 border-b border-canvas-line">{l.label}</a>
       ))}
     </div>
   </div>

@@ -1,12 +1,13 @@
 ---
 import Icon from "./Icon.astro";
 import { services } from "../data/site";
+import { url } from "../lib/url";
 interface Props { compact?: boolean }
 const { compact = false } = Astro.props;
 ---
 <div class="reveal-stagger grid md:grid-cols-2 lg:grid-cols-3 gap-5">
   {services.map((s) => (
-    <a href={`/${s.slug}/`} class="group relative rounded-2xl border border-canvas-line bg-canvas-soft p-7 flex flex-col justify-between min-h-[230px] overflow-hidden transition-colors hover:border-lime/40">
+    <a href={url(`/${s.slug}/`)} class="group relative rounded-2xl border border-canvas-line bg-canvas-soft p-7 flex flex-col justify-between min-h-[230px] overflow-hidden transition-colors hover:border-lime/40">
       <div class="absolute -right-8 -top-8 w-32 h-32 rounded-full bg-lime/0 group-hover:bg-lime/10 blur-2xl transition-colors duration-500" aria-hidden="true"></div>
       <div class="relative">
         <Icon name={s.icon} class="w-8 h-8 text-lime mb-5" />
