@@ -1,5 +1,6 @@
 ---
 import { company } from "../data/site";
+import { url } from "../lib/url";
 interface Props {
   eyebrow?: string;
   heading: string;
@@ -36,7 +37,7 @@ const {
           </ul>
         )}
         <div class="mt-9">
-          <a href="/kontakt/" class="magnetic btn btn-primary" data-magnetic>{buttonLabel}</a>
+          <a href={url("/kontakt/")} class="magnetic btn btn-primary" data-magnetic>{buttonLabel}</a>
         </div>
         {showContact && (
           <div class="mt-10 pt-8 border-t border-ink/10 grid sm:grid-cols-3 gap-6 text-left text-sm">

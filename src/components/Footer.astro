@@ -1,5 +1,6 @@
 ---
 import { company, footerLeistungen, footerAgentur, footerRechtlich } from "../data/site";
+import { url } from "../lib/url";
 const year = new Date().getFullYear();
 ---
 
@@ -7,8 +8,8 @@ const year = new Date().getFullYear();
   <div class="wrap">
     <div class="grid grid-cols-2 md:grid-cols-5 gap-10 md:gap-8">
       <div class="col-span-2">
-        <a href="/" class="flex items-center gap-2.5 mb-4">
-          <img src="/images/logo.png" alt="Steinhauer Media" width="24" height="24" />
+        <a href={url("/")} class="flex items-center gap-2.5 mb-4">
+          <img src={url("/images/logo.png")} alt="Steinhauer Media" width="24" height="24" />
           <span class="font-display font-semibold tracking-[0.06em] text-sm">STEINHAUER MEDIA</span>
         </a>
         <p class="text-ivory-dim text-sm max-w-[260px] leading-relaxed">Social Media · Performance Marketing · Webdesign<br />Konstanz / Bodensee</p>
@@ -17,19 +18,19 @@ const year = new Date().getFullYear();
       <div>
         <h5 class="text-xs tracking-[0.1em] uppercase text-ivory-faint mb-4">Leistungen</h5>
         <ul class="flex flex-col gap-3 text-sm text-ivory-dim">
-          {footerLeistungen.map((l) => <li><a href={`/${l.slug}/`} class="hover:text-lime transition-colors">{l.label}</a></li>)}
+          {footerLeistungen.map((l) => <li><a href={url(`/${l.slug}/`)} class="hover:text-lime transition-colors">{l.label}</a></li>)}
         </ul>
       </div>
       <div>
         <h5 class="text-xs tracking-[0.1em] uppercase text-ivory-faint mb-4">Agentur</h5>
         <ul class="flex flex-col gap-3 text-sm text-ivory-dim">
-          {footerAgentur.map((l) => <li><a href={`/${l.slug}/`} class="hover:text-lime transition-colors">{l.label}</a></li>)}
+          {footerAgentur.map((l) => <li><a href={url(`/${l.slug}/`)} class="hover:text-lime transition-colors">{l.label}</a></li>)}
         </ul>
       </div>
       <div>
         <h5 class="text-xs tracking-[0.1em] uppercase text-ivory-faint mb-4">Rechtlich</h5>
         <ul class="flex flex-col gap-3 text-sm text-ivory-dim">
-          {footerRechtlich.map((l) => <li><a href={`/${l.slug}/`} class="hover:text-lime transition-colors">{l.label}</a></li>)}
+          {footerRechtlich.map((l) => <li><a href={url(`/${l.slug}/`)} class="hover:text-lime transition-colors">{l.label}</a></li>)}
         </ul>
       </div>
     </div>
