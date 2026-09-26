@@ -24,8 +24,13 @@
   --color-graphite: #52525b;
   --color-graphite-line: #e4e4e7;
 
-  --font-display: "Space Grotesk", "Inter", sans-serif;
-  --font-sans: "Inter", "Helvetica Neue", sans-serif;
+  /* Original typography, read from the live sites' Google Fonts requests:
+     steinhauermedia.de loads Playfair Display for its large headlines and
+     DM Sans for body copy (services.steinhauermedia.de instead loads Plus
+     Jakarta Sans — DM Sans was kept here as the closer, classic pairing
+     with a serif display face). */
+  --font-display: "Playfair Display", "Georgia", serif;
+  --font-sans: "DM Sans", "Helvetica Neue", sans-serif;
 
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -51,8 +56,8 @@
   h1, h2, h3, h4 {
     font-family: var(--font-display);
     font-weight: 600;
-    letter-spacing: -0.02em;
-    line-height: 1.05;
+    letter-spacing: 0em;
+    line-height: 1.1;
   }
 
   ::selection {
