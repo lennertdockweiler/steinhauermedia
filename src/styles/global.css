@@ -108,6 +108,8 @@
     white-space: nowrap;
   }
   .btn-primary {
+    position: relative;
+    overflow: hidden;
     background: var(--color-lime);
     color: var(--color-ink);
     border-color: var(--color-lime);
@@ -115,6 +117,21 @@
   .btn-primary:hover {
     background: var(--color-lime-bright);
     border-color: var(--color-lime-bright);
+  }
+  .btn-primary::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -75%;
+    width: 45%;
+    height: 100%;
+    background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.55), transparent);
+    transform: skewX(-20deg);
+    transition: left 0.6s var(--ease-out-expo);
+    pointer-events: none;
+  }
+  .btn-primary:hover::after {
+    left: 130%;
   }
   .btn-ghost {
     background: transparent;
@@ -178,6 +195,23 @@
     transform: none;
   }
 
+  /* Clip-path wipe reveal — used for photos instead of a plain fade.
+     The clip-path lives on an inner .wipe-clip, and IntersectionObserver
+     watches the outer .wipe-observe instead: an element whose own
+     clip-path collapses its width to 0 never registers as intersecting
+     (Chrome computes the observed target's own clipped render rect), so
+     observing and clipping the same node can never fire. */
+  .wipe-clip {
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 1s var(--ease-out-expo);
+  }
+  .wipe-observe.is-visible .wipe-clip {
+    clip-path: inset(0 0 0 0);
+  }
+  .no-js .wipe-clip {
+    clip-path: inset(0 0 0 0);
+  }
+
   .marquee-track {
     display: flex;
     width: max-content;
@@ -202,6 +236,13 @@
       opacity: 1 !important;
       transform: none !important;
       transition: none !important;
+    }
+    .wipe-clip {
+      clip-path: inset(0 0 0 0) !important;
+      transition: none !important;
+    }
+    .btn-primary::after {
+      display: none;
     }
   }
 

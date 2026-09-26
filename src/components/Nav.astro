@@ -11,6 +11,10 @@ const { active = "", variant = "dark" } = Astro.props;
 
 <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[70] focus:bg-lime focus:text-ink focus:px-4 focus:py-2 focus:rounded-full">Zum Inhalt springen</a>
 
+<div id="scroll-progress-track" class="fixed top-0 inset-x-0 h-[3px] z-[60] pointer-events-none" aria-hidden="true">
+  <div id="scroll-progress-fill" class="h-full bg-lime origin-left" style="transform: scaleX(0);"></div>
+</div>
+
 <header
   id="site-nav"
   data-variant={variant}
@@ -107,21 +111,9 @@ const { active = "", variant = "dark" } = Astro.props;
     });
   }
 
-  // The scroll listener targets #site-nav fresh on every tick instead of a
-  // captured reference, and document itself is never replaced by a
-  // transition, so this one is safe to attach only once at module scope.
-  function updateNavScrollState() {
-    const header = document.getElementById("site-nav");
-    if (!header) return;
-    if (window.scrollY > 12) header.classList.add("nav-scrolled");
-    else header.classList.remove("nav-scrolled");
-  }
-
-  document.addEventListener("astro:page-load", () => {
-    bindNav();
-    updateNavScrollState();
-  });
-  document.addEventListener("scroll", updateNavScrollState, { passive: true });
+  // The nav-scrolled background toggle and the top scroll-progress bar are
+  // both driven from src/scripts/animations.ts (one shared scroll listener).
+  document.addEventListener("astro:page-load", bindNav);
 </script>
 
 <style>
