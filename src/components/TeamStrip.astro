@@ -1,12 +1,13 @@
 ---
 import { team } from "../data/site";
+import { url } from "../lib/url";
 interface Props { detailed?: boolean }
 const { detailed = false } = Astro.props;
 ---
 <div class={`grid sm:grid-cols-2 gap-6 ${detailed ? "" : "max-w-2xl"}`}>
   {team.map((member) => (
     <div class="reveal rounded-2xl border border-canvas-line bg-canvas-soft p-7">
-      <img src={`/images/${member.photo}`} alt={`${member.name}, ${member.role} bei Steinhauer Media`} width="72" height="72" class="w-16 h-16 rounded-full object-cover" />
+      <img src={url(`/images/${member.photo}`)} alt={`${member.name}, ${member.role} bei Steinhauer Media`} width="72" height="72" class="w-16 h-16 rounded-full object-cover" />
       <h3 class="font-display text-lg font-semibold mt-5">{member.name}</h3>
       <p class="text-lime text-[0.8rem] tracking-[0.04em] mt-1">{member.role}</p>
       {detailed ? (

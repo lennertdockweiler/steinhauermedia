@@ -1,11 +1,12 @@
 ---
 import { clientLogos } from "../data/site";
+import { url } from "../lib/url";
 ---
 <div class="marquee-row overflow-hidden">
   <div class="marquee-track">
     {[...clientLogos, ...clientLogos].map((logo) => (
       <div class="shrink-0 px-8 flex items-center">
-        <img src={`/images/${logo.file}`} alt={logo.alt} width="120" height="30" loading="lazy" class="h-7 w-auto object-contain opacity-60 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-300" />
+        <img src={url(`/images/${logo.file}`)} alt={logo.alt} width="120" height="30" loading="lazy" class="h-7 w-auto object-contain opacity-60 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-300" />
       </div>
     ))}
   </div>

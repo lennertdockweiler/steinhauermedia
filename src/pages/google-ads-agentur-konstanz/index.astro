@@ -5,6 +5,7 @@ import ServiceDetail from "../../components/ServiceDetail.astro";
 import CaseStats from "../../components/CaseStats.astro";
 import CtaSection from "../../components/CtaSection.astro";
 import { services, flagshipCase } from "../../data/site";
+import { url } from "../../lib/url";
 
 const service = services.find((s) => s.slug === "google-ads-agentur-konstanz")!;
 ---
@@ -25,7 +26,7 @@ const service = services.find((s) => s.slug === "google-ads-agentur-konstanz")!;
     <div class="reveal">
       <p class="kicker">Ergebnis aus der Praxis</p>
       <CaseStats stats={flagshipCase.stats} class="mt-6" />
-      <p class="text-ivory-dim text-sm mt-5">Google Search Ads + Meta Retargeting für eine lokale Dienstleisterin. <a href="/referenzen/" class="link-underline text-ivory">Case Study ansehen</a></p>
+      <p class="text-ivory-dim text-sm mt-5">Google Search Ads + Meta Retargeting für eine lokale Dienstleisterin. <a href={url("/referenzen/")} class="link-underline text-ivory">Case Study ansehen</a></p>
     </div>
   </ServiceDetail>
   <CtaSection heading="Bereit für den ersten Schritt?" buttonLabel={service.ctaText} />

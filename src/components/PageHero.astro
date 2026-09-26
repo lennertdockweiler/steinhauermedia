@@ -1,4 +1,5 @@
 ---
+import { url } from "../lib/url";
 interface Crumb { label: string; slug?: string }
 interface Props { kicker: string; heading: string; lead?: string; crumbs?: Crumb[] }
 const { kicker, heading, lead, crumbs = [] } = Astro.props;
@@ -8,12 +9,12 @@ const { kicker, heading, lead, crumbs = [] } = Astro.props;
     {crumbs.length > 0 && (
       <nav aria-label="Breadcrumb" class="mb-8">
         <ol class="flex flex-wrap items-center gap-2 text-xs text-ivory-faint">
-          <li><a href="/" class="hover:text-lime transition-colors">Startseite</a></li>
+          <li><a href={url("/")} class="hover:text-lime transition-colors">Startseite</a></li>
           {crumbs.map((c, i) => (
             <>
               <li aria-hidden="true">/</li>
               <li aria-current={i === crumbs.length - 1 ? "page" : undefined}>
-                {c.slug !== undefined ? <a href={`/${c.slug}/`} class="hover:text-lime transition-colors">{c.label}</a> : <span class="text-ivory-dim">{c.label}</span>}
+                {c.slug !== undefined ? <a href={url(`/${c.slug}/`)} class="hover:text-lime transition-colors">{c.label}</a> : <span class="text-ivory-dim">{c.label}</span>}
               </li>
             </>
           ))}
