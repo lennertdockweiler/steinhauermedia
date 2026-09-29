@@ -180,30 +180,30 @@ export const stats = [
 ];
 
 export const flagshipCase = {
-  title: "142 qualifizierte Anfragen für eine lokale Dienstleisterin.",
-  subtitle: "Google Search Ads + Meta Retargeting · Beispiel-Kampagne, Regensburg",
+  title: "142 Anfragen für ein lokales Laser-Studio.",
+  subtitle: "Google Search Ads + Meta Retargeting · Regensburg",
   stats: [
     { value: 142, decimals: 0, prefix: "", suffix: "", label: "Anfragen" },
-    { value: 1.48, decimals: 1, prefix: "€", suffix: "", label: "Kosten pro Klick" },
-    { value: 8.4, decimals: 1, prefix: "", suffix: "%", label: "Conversion Rate" },
-    { value: 17.6, decimals: 1, prefix: "€", suffix: "", label: "Cost per Lead" },
+    { value: 1.5, decimals: 2, prefix: "", suffix: " €", label: "Kosten pro Klick" },
+    { value: 8.4, decimals: 1, prefix: "", suffix: " %", label: "Conversion Rate" },
+    { value: 17.6, decimals: 2, prefix: "", suffix: " €", label: "Kosten pro Anfrage" },
   ],
   breakdown: [
     {
       heading: "Ausgangslage",
-      text: "Eine Kundin im Bereich dauerhafte Haarentfernung in Regensburg wollte planbar mehr qualifizierte Anfragen gewinnen, statt sich auf Zufallslaufkundschaft zu verlassen.",
+      text: "Eine Kundin im Bereich dauerhafte Haarentfernung in Regensburg wollte planbar mehr Anfragen gewinnen, statt sich auf organische Reichweite und Laufkundschaft zu verlassen.",
     },
     {
       heading: "Strategie",
-      text: "Kombination aus Google Search Ads für aktive Suchanfragen und Meta-Retargeting, um Interessenten erneut gezielt anzusprechen.",
+      text: "Google Search Ads erreichen potenzielle Kundinnen genau dann, wenn sie aktiv nach dauerhafter Haarentfernung suchen. Ergänzend wurden Interessentinnen über Meta Retargeting erneut angesprochen.",
     },
     {
       heading: "Umsetzung",
-      text: "Kampagnenstruktur, Zielgruppen, Landingpage und Tracking wurden aufgesetzt und laufend anhand der Ergebnisse optimiert.",
+      text: "Kampagnenstruktur, Suchbegriffe, Anzeigen, Zielgruppen, Landingpage und Conversion-Tracking wurden aufgesetzt und anschließend anhand der Kampagnendaten laufend optimiert.",
     },
     {
       heading: "Ergebnis",
-      text: "142 qualifizierte Neukundenanfragen bei 17,60 € Cost per Lead und einer Conversion-Rate von 8,4 %.",
+      text: "142 Anfragen bei durchschnittlich 17,60 € Kosten pro Lead und einer Conversion-Rate von 8,4 %.",
     },
   ],
 };
