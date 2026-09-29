@@ -3,7 +3,11 @@ import Layout from "../../layouts/Layout.astro";
 import PageHero from "../../components/PageHero.astro";
 import PricingGrid from "../../components/PricingGrid.astro";
 import Faq from "../../components/Faq.astro";
-import { faq } from "../../data/site";
+import Icon from "../../components/Icon.astro";
+import { faq, services } from "../../data/site";
+import { url } from "../../lib/url";
+
+const addOnServices = services.filter((s) => s.slug !== "social-media-agentur-konstanz");
 ---
 <Layout
   title="Marketing Pakete | Steinhauer Media"
@@ -23,6 +27,32 @@ import { faq } from "../../data/site";
       <PricingGrid withCta />
     </div>
   </section>
+
+  <section class="pb-24 md:pb-28">
+    <div class="wrap">
+      <div class="reveal max-w-xl mb-10">
+        <p class="kicker">Optionen</p>
+        <h2 class="mt-4 text-[clamp(1.5rem,3.2vw,2.1rem)]">Auch einzeln buchbar.</h2>
+        <p class="text-ivory-dim mt-3 text-sm leading-relaxed">Unabhängig von den Paketen übernehmen wir Website, SEO &amp; GEO, Google- &amp; Meta-Ads oder Social Recruiting (Mitarbeitergewinnung) auch einzeln — individuell auf Ihren Bedarf zugeschnitten.</p>
+      </div>
+      <div class="reveal-stagger grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        {addOnServices.map((s) => (
+          <a href={url(`/${s.slug}/`)} class="group relative rounded-2xl border border-canvas-line bg-canvas-soft p-6 flex flex-col justify-between min-h-[190px] overflow-hidden transition-colors hover:border-lime/40">
+            <div>
+              <Icon name={s.icon} class="w-7 h-7 text-lime mb-4" />
+              <h3 class="font-display text-base font-semibold">{s.name}</h3>
+              <p class="text-ivory-dim text-sm mt-2 leading-relaxed">{s.shortDesc}</p>
+            </div>
+            <span class="relative link-underline text-sm mt-5 text-ivory">
+              Einzeln anfragen
+              <Icon name="arrow" class="arrow w-3.5 h-3.5" />
+            </span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
   <section class="pb-28 md:pb-32">
     <div class="wrap max-w-3xl">
       <h2 class="text-[clamp(1.5rem,3.2vw,2rem)] mb-8">Häufig gestellte Fragen.</h2>
