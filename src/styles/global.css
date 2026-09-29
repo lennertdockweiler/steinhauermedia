@@ -9,6 +9,9 @@
      against services.steinhauermedia.de's own gold ramp #B89762/#E2C08D/
      #F3DFB9 and zinc greys #71717A/#A1A1AA/#D4D4D8) instead of the
      lime-accent relaunch palette or the plain ink/ivory guess before it.
+     The accent (--color-lime) was then hand-tuned from the extracted
+     #D4AF37 toward a softer champagne gold, closer to --color-champagne,
+     since the raw extracted value read as mustard-yellow on screen.
   */
   --color-canvas: #0c0d0e;
   --color-canvas-soft: #16191f;
@@ -16,16 +19,21 @@
   --color-ivory: #f4f4f6;
   --color-ivory-dim: #a1a1aa;
   --color-ivory-faint: #71717a;
-  --color-lime: #d4af37;
-  --color-lime-bright: #e2c08d;
+  --color-lime: #c9a668;
+  --color-lime-bright: #ddc394;
   --color-champagne: #c5a880;
   --color-champagne-light: #f3dfb9;
   --color-ink: #0c0d0e;
   --color-graphite: #52525b;
   --color-graphite-line: #e4e4e7;
 
-  --font-display: "Space Grotesk", "Inter", sans-serif;
-  --font-sans: "Inter", "Helvetica Neue", sans-serif;
+  /* Original typography, read from the live sites' Google Fonts requests:
+     steinhauermedia.de loads Playfair Display for its large headlines and
+     DM Sans for body copy (services.steinhauermedia.de instead loads Plus
+     Jakarta Sans — DM Sans was kept here as the closer, classic pairing
+     with a serif display face). */
+  --font-display: "Playfair Display", "Georgia", serif;
+  --font-sans: "DM Sans", "Helvetica Neue", sans-serif;
 
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -51,8 +59,8 @@
   h1, h2, h3, h4 {
     font-family: var(--font-display);
     font-weight: 600;
-    letter-spacing: -0.02em;
-    line-height: 1.05;
+    letter-spacing: 0em;
+    line-height: 1.1;
   }
 
   ::selection {

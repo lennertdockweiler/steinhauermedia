@@ -8,6 +8,7 @@ import CaseStats from "../components/CaseStats.astro";
 import ProcessStrip from "../components/ProcessStrip.astro";
 import TeamStrip from "../components/TeamStrip.astro";
 import CtaSection from "../components/CtaSection.astro";
+import VideoPlaceholder from "../components/VideoPlaceholder.astro";
 import { stats, flagshipCase } from "../data/site";
 import { url } from "../lib/url";
 ---
@@ -46,6 +47,18 @@ import { url } from "../lib/url";
     <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-ivory-faint text-[0.7rem] tracking-[0.14em] uppercase">
       <span class="block w-px h-10 bg-gradient-to-b from-transparent via-ivory-faint to-transparent"></span>
       Scrollen
+    </div>
+  </section>
+
+  <!-- INTRO VIDEO -->
+  <section class="py-20 md:py-28">
+    <div class="wrap grid md:grid-cols-[1fr_260px] gap-12 md:gap-16 items-center">
+      <div class="reveal">
+        <p class="kicker">Lernen Sie uns kennen</p>
+        <h2 class="mt-4 text-[clamp(1.6rem,3.6vw,2.4rem)] max-w-lg">Wer wir sind und was wir für Sie übernehmen.</h2>
+        <p class="text-ivory-dim mt-4 max-w-md text-sm leading-relaxed">Ein kurzes Vorstellungsvideo — wer hinter Steinhauer Media steckt und welche Leistungen wir für Unternehmen am Bodensee übernehmen.</p>
+      </div>
+      <VideoPlaceholder title="Vorstellungsvideo — wer wir sind & was wir anbieten" class="max-w-[260px] mx-auto" />
     </div>
   </section>
 

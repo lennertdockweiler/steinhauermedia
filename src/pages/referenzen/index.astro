@@ -7,6 +7,7 @@ import RelatedLinks from "../../components/RelatedLinks.astro";
 import UpcomingCase from "../../components/UpcomingCase.astro";
 import WebsiteDemo from "../../components/WebsiteDemo.astro";
 import CtaSection from "../../components/CtaSection.astro";
+import VideoPlaceholder from "../../components/VideoPlaceholder.astro";
 import { flagshipCase, upcomingCases } from "../../data/site";
 ---
 <Layout
@@ -59,6 +60,28 @@ import { flagshipCase, upcomingCases } from "../../data/site";
       <div class="reveal-stagger grid md:grid-cols-2 gap-5">
         {upcomingCases.map((c) => (
           <UpcomingCase id={c.id} name={c.name} category={c.category} blurb={c.blurb} fields={c.fields} related={c.related} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="pb-24 md:pb-28">
+    <div class="wrap">
+      <div class="reveal max-w-xl mb-10">
+        <p class="kicker">Kundenstimmen</p>
+        <h2 class="mt-4 text-[clamp(1.5rem,3.2vw,2.1rem)]">Referenz-Videos &amp; O-Töne.</h2>
+        <p class="text-ivory-dim mt-3 text-sm leading-relaxed">Kurze Statements unserer Kunden — Videos und Texte folgen, sobald die Kampagnen final ausgewertet sind.</p>
+      </div>
+      <div class="reveal-stagger grid md:grid-cols-3 gap-8">
+        {[1, 2, 3].map((n) => (
+          <div class="flex flex-col gap-5">
+            <VideoPlaceholder title={`Referenz-Video ${n}`} label="Video-Platzhalter" class="max-w-[220px] mx-auto md:mx-0" />
+            <div class="rounded-2xl border border-dashed border-canvas-line bg-canvas-soft p-5">
+              <p class="text-[0.65rem] uppercase tracking-[0.12em] text-ivory-faint">Text-Platzhalter</p>
+              <p class="mt-2 text-sm text-ivory-dim leading-relaxed">„Hier steht das Kundenzitat …"</p>
+              <p class="mt-3 text-xs text-ivory-faint">Name, Unternehmen — Referenz {n}</p>
+            </div>
+          </div>
         ))}
       </div>
     </div>
