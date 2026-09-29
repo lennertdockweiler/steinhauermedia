@@ -6,7 +6,7 @@ import { url } from "../lib/url";
   <div class="marquee-track">
     {[...clientLogos, ...clientLogos].map((logo) => (
       <div class="shrink-0 px-8 flex items-center">
-        <img src={url(`/images/${logo.file}`)} alt={logo.alt} width="120" height="30" loading="lazy" class="h-7 w-auto object-contain opacity-60 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-300" />
+        <img src={url(`/images/${logo.file}`)} alt={logo.alt} width="280" height="70" loading="lazy" class="h-16 md:h-20 w-auto object-contain opacity-90 hover:opacity-100 transition-opacity duration-300" />
       </div>
     ))}
   </div>

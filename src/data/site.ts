@@ -43,6 +43,7 @@ export interface Service {
   note?: string;
   ctaText: string;
   related: { slug: string; label: string }[];
+  video?: { src: string; poster: string; title: string; aspect?: "portrait" | "landscape" };
 }
 
 export const services: Service[] = [
@@ -71,6 +72,7 @@ export const services: Service[] = [
       { slug: "referenzen", label: "Referenzen" },
       { slug: "kontakt", label: "Kontakt" },
     ],
+    video: { src: "/images/videos/boot.mp4", poster: "/images/videos/posters/boot.jpg", title: "Imagefilm für das Boot Center Konstanz", aspect: "landscape" },
   },
   {
     slug: "social-recruiting",
@@ -90,6 +92,7 @@ export const services: Service[] = [
     ],
     note: "Wir garantieren keine bestimmte Bewerberzahl, sondern qualifizierte Sichtbarkeit bei potenziellen Mitarbeitenden.",
     ctaText: "Recruiting-Potenzial besprechen",
+    video: { src: "/images/videos/recruiting-reel.mp4", poster: "/images/videos/posters/recruiting-reel.jpg", title: "Recruiting-Reel-Beispiel" },
     related: [
       { slug: "social-media-agentur-konstanz", label: "Social Media" },
       { slug: "kontakt", label: "Kontakt" },
@@ -174,9 +177,9 @@ export const services: Service[] = [
 export const stats = [
   { value: 100, suffix: "%", label: "Fokus auf Kundenzufriedenheit" },
   { value: 3, suffix: "+", label: "Jahre Erfahrung" },
-  { value: 5, suffix: " Mio.+", label: "Views generiert" },
-  { value: 120, suffix: "k+", label: "Likes gesammelt" },
-  { value: 30, suffix: "+", label: "Glückliche Kunden" },
+  { value: 28, suffix: " Mio.+", label: "Views generiert" },
+  { value: 800, suffix: "k+", label: "Likes gesammelt" },
+  { value: 100, suffix: "+", label: "Glückliche Kunden" },
 ];
 
 export const flagshipCase = {
@@ -241,6 +244,28 @@ export const clientLogos = [
   { file: "client-a-gradmann.jpg", alt: "A. Gradmann" },
   { file: "client-langenbach.jpg", alt: "Langenbach" },
   { file: "client-freshlineart.jpg", alt: "FreshLineArt" },
+];
+
+export const testimonials = [
+  {
+    type: "video" as const,
+    name: "Sina Degen",
+    company: "Boot Center Konstanz",
+    src: "/images/videos/testimonial-bck.mp4",
+    poster: "/images/videos/posters/testimonial-bck.jpg",
+  },
+  {
+    type: "image" as const,
+    name: "Erhard Dauke",
+    company: "Club Aktiv",
+    src: "/images/rezensionen/testimonial-club-aktiv.jpg",
+  },
+  {
+    type: "image" as const,
+    name: "Patrick Ruess",
+    company: "Langenbach GmbH",
+    src: "/images/rezensionen/testimonial-langenbach.jpg",
+  },
 ];
 
 export const team = [

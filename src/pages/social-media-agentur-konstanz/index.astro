@@ -3,11 +3,19 @@ import Layout from "../../layouts/Layout.astro";
 import PageHero from "../../components/PageHero.astro";
 import ServiceDetail from "../../components/ServiceDetail.astro";
 import UpcomingCase from "../../components/UpcomingCase.astro";
+import VideoPlaceholder from "../../components/VideoPlaceholder.astro";
 import CtaSection from "../../components/CtaSection.astro";
 import { services, upcomingCases } from "../../data/site";
+import { url } from "../../lib/url";
 
 const service = services.find((s) => s.slug === "social-media-agentur-konstanz")!;
 const kase = upcomingCases.find((c) => c.id === "case-club-aktiv")!;
+
+const contentExamples = [
+  { title: "Unterhaltung & Reichweite", src: url("/images/videos/comedy.mp4"), poster: url("/images/videos/posters/comedy.jpg") },
+  { title: "Wissen vermitteln", src: url("/images/videos/education.mp4"), poster: url("/images/videos/posters/education.jpg") },
+  { title: "Wissen vermitteln — Polywerft", src: url("/images/videos/polywerft.mp4"), poster: url("/images/videos/posters/polywerft.jpg") },
+];
 ---
 <Layout
   title="Social Media Agentur Konstanz | Steinhauer Media"
@@ -24,6 +32,15 @@ const kase = upcomingCases.find((c) => c.id === "case-club-aktiv")!;
   />
   <ServiceDetail service={service}>
     <UpcomingCase id={kase.id} name={kase.name} category={kase.category} blurb={kase.blurb} related={kase.related} />
+    <div class="reveal mt-16">
+      <p class="kicker">Content-Beispiele</p>
+      <h3 class="mt-4 text-[clamp(1.3rem,2.6vw,1.7rem)] max-w-lg">Die Bandbreite an Formaten, die wir produzieren.</h3>
+      <div class="reveal-stagger grid sm:grid-cols-3 gap-5 mt-8 max-w-2xl">
+        {contentExamples.map((v) => (
+          <VideoPlaceholder title={v.title} src={v.src} poster={v.poster} />
+        ))}
+      </div>
+    </div>
   </ServiceDetail>
   <CtaSection heading="Bereit für den ersten Schritt?" buttonLabel={service.ctaText} />
 </Layout>

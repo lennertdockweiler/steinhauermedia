@@ -19,7 +19,11 @@ import { url } from "../lib/url";
   navActive="home"
 >
   <!-- HERO -->
-  <section class="relative min-h-screen flex items-center overflow-hidden pt-24">
+  <section class="relative z-0 min-h-screen flex items-center overflow-hidden pt-24">
+    <div class="absolute inset-0 -z-20 overflow-hidden" aria-hidden="true">
+      <img src={url("/images/konstanz.jpg")} alt="" class="absolute inset-0 w-full h-full object-cover opacity-45" />
+      <div class="absolute inset-0" style="background-image: linear-gradient(to bottom, transparent 0%, var(--color-canvas) 34%);"></div>
+    </div>
     <div class="absolute inset-0 -z-10 overflow-hidden" data-cursor-glow-zone aria-hidden="true">
       <div class="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_0%,rgba(212,175,55,0.16),transparent)]"></div>
       <div class="absolute inset-0 opacity-[0.06]" style="background-image: linear-gradient(to right, #f4f4f6 1px, transparent 1px), linear-gradient(to bottom, #f4f4f6 1px, transparent 1px); background-size: 64px 64px; mask-image: radial-gradient(ellipse 70% 60% at 50% 30%, black, transparent);"></div>
@@ -58,7 +62,12 @@ import { url } from "../lib/url";
         <h2 class="mt-4 text-[clamp(1.6rem,3.6vw,2.4rem)] max-w-lg">Wer wir sind und was wir für Sie übernehmen.</h2>
         <p class="text-ivory-dim mt-4 max-w-md text-sm leading-relaxed">Ein kurzes Vorstellungsvideo — wer hinter Steinhauer Media steckt und welche Leistungen wir für Unternehmen am Bodensee übernehmen.</p>
       </div>
-      <VideoPlaceholder title="Vorstellungsvideo — wer wir sind & was wir anbieten" class="max-w-[260px] mx-auto" />
+      <VideoPlaceholder
+        title="Vorstellungsvideo — wer wir sind & was wir anbieten"
+        src={url("/images/videos/ueber-uns.mp4")}
+        poster={url("/images/videos/posters/ueber-uns.jpg")}
+        class="max-w-[260px] mx-auto"
+      />
     </div>
   </section>
 
