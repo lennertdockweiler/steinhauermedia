@@ -1,6 +1,7 @@
 ---
 import Icon from "./Icon.astro";
-import { pricing, company } from "../data/site";
+import { pricing } from "../data/site";
+import { url } from "../lib/url";
 interface Props { withCta?: boolean }
 const { withCta = false } = Astro.props;
 ---
@@ -20,7 +21,7 @@ const { withCta = false } = Astro.props;
       </ul>
       <p class={`text-[0.85rem] mt-auto pt-6 ${tier.featured ? "text-graphite" : "text-ivory-dim"}`}>Für wen geeignet? {tier.fit}</p>
       {withCta && (
-        <a href={`mailto:${company.email}`} class={`btn justify-center mt-5 ${tier.featured ? "btn-primary" : "btn-ghost"}`}>Kostenloses Angebot</a>
+        <a href={url("/kontakt/")} class={`btn justify-center mt-5 ${tier.featured ? "btn-primary" : "btn-ghost"}`}>Kostenloses Angebot</a>
       )}
     </div>
   ))}

@@ -3,6 +3,18 @@ import { team } from "../data/site";
 import { url } from "../lib/url";
 interface Props { detailed?: boolean }
 const { detailed = false } = Astro.props;
+
+function splitEmphasis(text: string) {
+  const match = text.match(/(organisch\w*)/i);
+  if (!match || match.index === undefined) return [{ text, emphasis: false }];
+  const { index } = match;
+  const word = match[0];
+  return [
+    { text: text.slice(0, index), emphasis: false },
+    { text: word, emphasis: true },
+    { text: text.slice(index + word.length), emphasis: false },
+  ].filter((part) => part.text.length > 0);
+}
 ---
 <div class={`grid sm:grid-cols-2 gap-6 ${detailed ? "" : "max-w-2xl"}`}>
   {team.map((member) => (
@@ -12,7 +24,13 @@ const { detailed = false } = Astro.props;
       <p class="text-lime text-[0.8rem] tracking-[0.04em] mt-1">{member.role}</p>
       {detailed ? (
         <ul class="mt-4 flex flex-col gap-1.5 text-sm text-ivory-dim">
-          {member.responsibilities.map((r) => <li>{r}</li>)}
+          {member.responsibilities.map((r) => (
+            <li>
+              {splitEmphasis(r).map((part) =>
+                part.emphasis ? <span class="text-lg font-semibold text-ivory">{part.text}</span> : part.text
+              )}
+            </li>
+          ))}
         </ul>
       ) : (
         <p class="text-ivory-dim text-sm mt-3 leading-relaxed">Verantwortlich für {member.responsibilities.join(", ")}.</p>

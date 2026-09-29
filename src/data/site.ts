@@ -44,6 +44,7 @@ export interface Service {
   ctaText: string;
   related: { slug: string; label: string }[];
   video?: { src: string; poster: string; title: string; aspect?: "portrait" | "landscape" };
+  secondaryVideo?: { src: string; poster: string; title: string; aspect?: "portrait" | "landscape" };
 }
 
 export const services: Service[] = [
@@ -72,7 +73,8 @@ export const services: Service[] = [
       { slug: "referenzen", label: "Referenzen" },
       { slug: "kontakt", label: "Kontakt" },
     ],
-    video: { src: "/images/videos/boot.mp4", poster: "/images/videos/posters/boot.jpg", title: "Imagefilm für das Boot Center Konstanz", aspect: "landscape" },
+    video: { src: "/images/videos/polywerft.mp4", poster: "/images/videos/posters/polywerft.jpg", title: "Wissen vermitteln" },
+    secondaryVideo: { src: "/images/videos/boot.mp4", poster: "/images/videos/posters/boot.jpg", title: "Imagefilm für das Boot Center Konstanz", aspect: "landscape" },
   },
   {
     slug: "social-recruiting",
@@ -279,7 +281,7 @@ export const team = [
     name: "Lennert",
     role: "Websites & Performance Marketing",
     photo: "team-lennert.jpg",
-    responsibilities: ["Webdesign", "SEO", "Google Ads", "Meta Ads", "Tracking"],
+    responsibilities: ["Webdesign", "SEO/GEO", "Google & Meta Ads", "Social Media Strategie"],
   },
 ];
 

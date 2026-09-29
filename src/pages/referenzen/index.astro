@@ -73,25 +73,25 @@ import { url } from "../../lib/url";
         <h2 class="mt-4 text-[clamp(1.5rem,3.2vw,2.1rem)]">Referenz-Videos &amp; O-Töne.</h2>
         <p class="text-ivory-dim mt-3 text-sm leading-relaxed">Das sagen Kunden über die Zusammenarbeit mit uns.</p>
       </div>
-      <div class="reveal-stagger grid md:grid-cols-3 gap-8">
+      <div class="reveal-stagger grid md:grid-cols-3 gap-8 justify-items-center">
         {testimonials.map((t) => (
-          <div class="flex flex-col gap-5 max-w-[220px] mx-auto md:mx-0">
-            {t.type === "video" ? (
-              <>
+          <div class="flex flex-col items-center gap-4 w-full max-w-[230px]">
+            <div class="relative w-full rounded-[1.6rem] p-2 bg-gradient-to-b from-lime/60 via-lime/20 to-transparent shadow-[0_0_45px_-12px_rgba(201,166,104,0.45)]">
+              {t.type === "video" ? (
                 <VideoPlaceholder title={`Kundenstimme — ${t.company}`} label="Video-Testimonial" src={url(t.src)} poster={url(t.poster!)} />
-                <div class="rounded-2xl border border-canvas-line bg-canvas-soft p-5">
-                  <p class="text-sm text-ivory-dim">{t.name}</p>
-                  <p class="text-xs text-ivory-faint mt-1">{t.company}</p>
-                </div>
-              </>
-            ) : (
-              <img
-                src={url(t.src)}
-                alt={`Kundenstimme von ${t.name}, ${t.company}`}
-                class="reveal aspect-[9/16] w-full rounded-2xl border border-canvas-line object-cover"
-                loading="lazy"
-              />
-            )}
+              ) : (
+                <img
+                  src={url(t.src)}
+                  alt={`Kundenstimme von ${t.name}, ${t.company}`}
+                  class="aspect-[9/16] w-full rounded-2xl object-cover"
+                  loading="lazy"
+                />
+              )}
+            </div>
+            <div class="text-center">
+              <p class="text-sm text-ivory">{t.name}</p>
+              <p class="text-xs text-lime mt-0.5">{t.company}</p>
+            </div>
           </div>
         ))}
       </div>
