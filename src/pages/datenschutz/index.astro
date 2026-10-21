@@ -18,7 +18,11 @@ const legalName = company.legalName || "[Vertretungsberechtigte Person / Rechtsf
       <p>{legalName}<br />{company.addressLine}<br />E-Mail: <a href={`mailto:${company.email}`} class="link-underline">{company.email}</a></p>
 
       <h2>Kontaktformular</h2>
-      <p>Das Kontaktformular auf dieser Website öffnet beim Absenden Ihr lokales E-Mail-Programm mit einer vorausgefüllten Nachricht an {company.email} (mailto-Link). Ihre Eingaben werden dabei nicht an einen Server dieser Website übertragen oder dort gespeichert; die Übermittlung erfolgt ausschließlich über Ihr E-Mail-Programm, sobald Sie die E-Mail selbst versenden.</p>
+      {company.web3formsKey ? (
+        <p>Wenn Sie uns über das Kontaktformular eine Anfrage senden, werden Ihre Angaben (Name, Unternehmen, E-Mail, Telefon, Thema und Nachricht) über den Dienst Web3Forms (web3forms.com) per E-Mail an {company.email} weitergeleitet. Web3Forms verarbeitet die Daten zur Zustellung der Nachricht. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (Anbahnung eines Vertrags) bzw. lit. f DSGVO (berechtigtes Interesse an der Beantwortung von Anfragen). Wir verwenden Ihre Angaben nur zur Bearbeitung Ihrer Anfrage.</p>
+      ) : (
+        <p>Das Kontaktformular auf dieser Website öffnet beim Absenden Ihr lokales E-Mail-Programm mit einer vorausgefüllten Nachricht an {company.email} (mailto-Link). Ihre Eingaben werden dabei nicht an einen Server dieser Website übertragen oder dort gespeichert; die Übermittlung erfolgt ausschließlich über Ihr E-Mail-Programm, sobald Sie die E-Mail selbst versenden.</p>
+      )}
 
       <h2>Eingebundene Inhalte Dritter</h2>
       <p>Auf den Seiten „Referenzen" und „Webdesign" binden wir einen interaktiven Live-Prototyp per iframe von einer eigenen Subdomain (steinhauermedia.de) ein. Beim Laden dieser Seiten kann eine Verbindung zu diesem Server aufgebaut werden. Zudem verlinken wir auf unser Instagram-Profil; beim Anklicken dieses externen Links gelten die Datenschutzbestimmungen von Meta/Instagram. Schriftarten werden über Google Fonts eingebunden, wobei eine Verbindung zu Servern von Google entstehen kann.</p>

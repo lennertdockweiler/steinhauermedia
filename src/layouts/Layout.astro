@@ -3,6 +3,7 @@ import "../styles/global.css";
 import Seo from "../components/Seo.astro";
 import Nav from "../components/Nav.astro";
 import Footer from "../components/Footer.astro";
+import WhatsAppButton from "../components/WhatsAppButton.astro";
 import { ClientRouter } from "astro:transitions";
 
 interface Crumb { label: string; slug?: string }
@@ -39,6 +40,7 @@ const {
     <slot />
   </main>
   <Footer />
+  <WhatsAppButton />
   <script>
     import "../scripts/animations";
   </script>

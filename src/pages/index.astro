@@ -9,6 +9,7 @@ import ProcessStrip from "../components/ProcessStrip.astro";
 import TeamStrip from "../components/TeamStrip.astro";
 import CtaSection from "../components/CtaSection.astro";
 import VideoPlaceholder from "../components/VideoPlaceholder.astro";
+import Testimonials from "../components/Testimonials.astro";
 import { stats, flagshipCase } from "../data/site";
 import { url } from "../lib/url";
 ---
@@ -90,7 +91,7 @@ import { url } from "../lib/url";
       <div class="reveal flex flex-wrap items-end justify-between gap-6 mb-12">
         <div>
           <p class="kicker">Leistungen</p>
-          <h2 class="mt-4 text-[clamp(1.8rem,4vw,2.6rem)] max-w-lg">Drei Leistungen, ein System.</h2>
+          <h2 class="mt-4 text-[clamp(1.8rem,4vw,2.6rem)] max-w-lg">Fünf Leistungen, ein System.</h2>
         </div>
         <p class="text-ivory-dim max-w-sm text-sm leading-relaxed">Content, Werbung und digitale Infrastruktur greifen bei uns ineinander, um Unternehmen sichtbar zu machen.</p>
       </div>
@@ -114,6 +115,17 @@ import { url } from "../lib/url";
       <div class="mt-10">
         <a href={url("/referenzen/")} class="link-underline text-sm">Case Study ansehen <span class="arrow">→</span></a>
       </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="py-20 md:py-28">
+    <div class="wrap">
+      <div class="reveal max-w-xl mb-10">
+        <p class="kicker">Kundenstimmen</p>
+        <h2 class="mt-4 text-[clamp(1.6rem,3.6vw,2.4rem)]">Das sagen unsere Kunden.</h2>
+      </div>
+      <Testimonials />
     </div>
   </section>
 

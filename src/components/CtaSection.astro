@@ -36,8 +36,11 @@ const {
             ))}
           </ul>
         )}
-        <div class="mt-9">
+        <div class="mt-9 flex flex-wrap items-center justify-center gap-x-6 gap-y-4">
           <a href={url("/kontakt/")} class="magnetic btn btn-primary" data-magnetic>{buttonLabel}</a>
+          {company.bookingUrl && (
+            <a href={company.bookingUrl} target="_blank" rel="noopener" class="link-underline text-sm">Direkt Termin buchen <span class="arrow">→</span></a>
+          )}
         </div>
         {showContact && (
           <div class="mt-10 pt-8 border-t border-ink/10 grid sm:grid-cols-3 gap-6 text-left text-sm">

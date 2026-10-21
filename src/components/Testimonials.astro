@@ -1,0 +1,27 @@
+---
+import VideoPlaceholder from "./VideoPlaceholder.astro";
+import { testimonials } from "../data/site";
+import { url } from "../lib/url";
+---
+<div class="reveal-stagger grid md:grid-cols-3 gap-8 justify-items-center">
+  {testimonials.map((t) => (
+    <div class="flex flex-col items-center gap-4 w-full max-w-[230px]">
+      <div class="relative w-full rounded-[1.6rem] p-2 bg-gradient-to-b from-lime/60 via-lime/20 to-transparent shadow-[0_0_45px_-12px_rgba(201,166,104,0.45)]">
+        {t.type === "video" ? (
+          <VideoPlaceholder title={`Kundenstimme — ${t.company}`} label="Video-Testimonial" src={url(t.src)} poster={url(t.poster!)} />
+        ) : (
+          <img
+            src={url(t.src)}
+            alt={`Kundenstimme von ${t.name}, ${t.company}`}
+            class="aspect-[9/16] w-full rounded-2xl object-cover"
+            loading="lazy"
+          />
+        )}
+      </div>
+      <div class="text-center">
+        <p class="text-sm text-ivory">{t.name}</p>
+        <p class="text-xs text-lime mt-0.5">{t.company}</p>
+      </div>
+    </div>
+  ))}
+</div>

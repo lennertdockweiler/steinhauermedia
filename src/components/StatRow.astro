@@ -3,7 +3,7 @@ interface Stat { value: number; suffix?: string; prefix?: string; decimals?: num
 interface Props { stats: Stat[]; class?: string }
 const { stats, class: klass = "" } = Astro.props;
 ---
-<div class={`reveal-stagger grid grid-cols-2 md:grid-cols-5 gap-8 md:gap-6 ${klass}`}>
+<div class={`reveal-stagger grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-6 ${klass}`}>
   {stats.map((s) => (
     <div class="text-center md:text-left">
       <div

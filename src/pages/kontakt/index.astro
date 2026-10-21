@@ -54,7 +54,15 @@ import { company } from "../../data/site";
           <label for="c-message" class="text-sm text-ivory-dim">Erzählen Sie uns kurz, worum es geht.*</label>
           <textarea id="c-message" name="message" rows="5" required class="form-input resize-none"></textarea>
         </div>
-        <button type="submit" class="magnetic btn btn-primary self-start mt-2" data-magnetic>Kostenlose Potenzialanalyse anfragen</button>
+        <!-- Honeypot gegen Spam-Bots: für Menschen unsichtbar -->
+        <input type="checkbox" name="botcheck" class="hidden" tabindex="-1" autocomplete="off" aria-hidden="true" />
+        <div class="flex flex-wrap items-center gap-x-6 gap-y-3 mt-2">
+          <button type="submit" class="magnetic btn btn-primary" data-magnetic>Kostenlose Potenzialanalyse anfragen</button>
+          {company.bookingUrl && (
+            <a href={company.bookingUrl} target="_blank" rel="noopener" class="link-underline text-sm">Oder direkt einen Termin buchen <span class="arrow">→</span></a>
+          )}
+        </div>
+        <p id="form-status" role="status" aria-live="polite" class="text-sm min-h-[1.25rem]"></p>
       </form>
 
       <div class="reveal flex flex-col gap-4">
@@ -81,24 +89,57 @@ import { company } from "../../data/site";
   </section>
 </Layout>
 
-<script define:vars={{ email: company.email }}>
+<script define:vars={{ email: company.email, accessKey: company.web3formsKey }}>
   // Re-bind on every astro:page-load (fires on first load too) so this
   // still works after navigating away and back via a view transition.
   document.addEventListener("astro:page-load", () => {
     const form = document.getElementById("contact-form");
-    form?.addEventListener("submit", (e) => {
+    const status = document.getElementById("form-status");
+    form?.addEventListener("submit", async (e) => {
       e.preventDefault();
       const data = new FormData(form);
-      const lines = [
-        `Unternehmen: ${data.get("company") || "-"}`,
-        `Telefon: ${data.get("phone") || "-"}`,
-        `Thema: ${data.get("topic")}`,
-        "",
-        String(data.get("message") || ""),
-      ];
-      const subject = encodeURIComponent(`Potenzialanalyse-Anfrage von ${data.get("name")}`);
-      const body = encodeURIComponent(lines.join("\n"));
-      window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
+      if (data.get("botcheck")) return;
+
+      // Without a Web3Forms key, fall back to opening the visitor's mail client.
+      if (!accessKey) {
+        const lines = [
+          `Unternehmen: ${data.get("company") || "-"}`,
+          `Telefon: ${data.get("phone") || "-"}`,
+          `Thema: ${data.get("topic")}`,
+          "",
+          String(data.get("message") || ""),
+        ];
+        const subject = encodeURIComponent(`Potenzialanalyse-Anfrage von ${data.get("name")}`);
+        const body = encodeURIComponent(lines.join("\n"));
+        window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
+        return;
+      }
+
+      const button = form.querySelector("button[type=submit]");
+      button.disabled = true;
+      status.className = "text-sm min-h-[1.25rem] text-ivory-dim";
+      status.textContent = "Wird gesendet …";
+      try {
+        const payload = Object.fromEntries(data);
+        payload.access_key = accessKey;
+        payload.subject = `Potenzialanalyse-Anfrage von ${data.get("name")}`;
+        payload.from_name = "steinhauermedia.de";
+        const res = await fetch("https://api.web3forms.com/submit", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Accept: "application/json" },
+          body: JSON.stringify(payload),
+        });
+        const json = await res.json();
+        if (!json.success) throw new Error(json.message);
+        form.reset();
+        status.className = "text-sm min-h-[1.25rem] text-lime";
+        status.textContent = "Danke! Ihre Anfrage ist bei uns angekommen. Wir melden uns schnellstmöglich bei Ihnen.";
+      } catch {
+        status.className = "text-sm min-h-[1.25rem] text-red-400";
+        status.textContent = `Das hat leider nicht geklappt. Bitte schreiben Sie uns direkt an ${email}.`;
+      } finally {
+        button.disabled = false;
+      }
     });
   });
 </script>

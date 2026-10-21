@@ -19,6 +19,11 @@ export const company = {
     { label: "Shawn", value: "+49 151 56002155", href: "+4915156002155" },
   ],
   instagram: "https://www.instagram.com/steinhauer.media",
+  // Web3Forms access key (web3forms.com, kostenlos). Leer = Formular öffnet
+  // weiterhin das Mailprogramm (mailto-Fallback).
+  web3formsKey: "",
+  // Online-Terminbuchung (z. B. Cal.com / Calendly). Leer = Button wird ausgeblendet.
+  bookingUrl: "",
   locale: "de_DE",
   language: "de",
 };
@@ -177,7 +182,6 @@ export const services: Service[] = [
 ];
 
 export const stats = [
-  { value: 100, suffix: "%", label: "Fokus auf Kundenzufriedenheit" },
   { value: 3, suffix: "+", label: "Jahre Erfahrung" },
   { value: 28, suffix: " Mio.+", label: "Views generiert" },
   { value: 800, suffix: "k+", label: "Likes gesammelt" },
@@ -237,15 +241,15 @@ export const upcomingCases = [
 ];
 
 export const clientLogos = [
-  { file: "client-club-aktiv.jpg", alt: "Club Aktiv" },
-  { file: "client-o2.jpg", alt: "o2" },
-  { file: "client-polywerft.jpg", alt: "Polywerft" },
-  { file: "client-staib.jpg", alt: "Staib" },
-  { file: "client-prima-vera-dresses.jpg", alt: "Prima Vera Dresses" },
-  { file: "client-bck-adventure.jpg", alt: "BCK Adventure" },
-  { file: "client-a-gradmann.jpg", alt: "A. Gradmann" },
-  { file: "client-langenbach.jpg", alt: "Langenbach" },
-  { file: "client-freshlineart.jpg", alt: "FreshLineArt" },
+  { file: "client-club-aktiv.png", alt: "Club Aktiv" },
+  { file: "client-o2.png", alt: "o2" },
+  { file: "client-polywerft.png", alt: "Polywerft" },
+  { file: "client-staib.png", alt: "Staib" },
+  { file: "client-prima-vera-dresses.png", alt: "Prima Vera Dresses" },
+  { file: "client-bck-adventure.png", alt: "BCK Adventure" },
+  { file: "client-a-gradmann.png", alt: "A. Gradmann" },
+  { file: "client-langenbach.png", alt: "Langenbach" },
+  { file: "client-freshlineart.png", alt: "FreshLineArt" },
 ];
 
 export const testimonials = [

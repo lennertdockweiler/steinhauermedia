@@ -1,0 +1,13 @@
+[16762917ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:4391/src/styles/global.css?t=1792589862198:0
+[16762918ms] [ERROR] [vite] Failed to reload /src/styles/global.css. This could be due to syntax errors or importing non-existent modules. (see errors above) @ http://localhost:4391/@vite/client:298
+[16762937ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:4391/src/styles/global.css?t=1792589862199:0
+[16762937ms] [ERROR] [vite] Failed to reload /src/styles/global.css. This could be due to syntax errors or importing non-existent modules. (see errors above) @ http://localhost:4391/@vite/client:298
+[16762941ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:4391/src/styles/global.css?t=1792589862200:0
+[16762941ms] [ERROR] [vite] Failed to reload /src/styles/global.css. This could be due to syntax errors or importing non-existent modules. (see errors above) @ http://localhost:4391/@vite/client:298
+[16762943ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:4391/src/styles/global.css?t=1792589862201:0
+[16762944ms] [ERROR] [vite] Failed to reload /src/styles/global.css. This could be due to syntax errors or importing non-existent modules. (see errors above) @ http://localhost:4391/@vite/client:298
+[16762949ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:4391/src/styles/global.css?t=1792589862202:0
+[16762950ms] [ERROR] [vite] Failed to reload /src/styles/global.css. This could be due to syntax errors or importing non-existent modules. (see errors above) @ http://localhost:4391/@vite/client:298
+[16762966ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:4391/:0
+[16762986ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:4391/@vite/client:0
+[16763006ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:4391/favicon.ico:0
