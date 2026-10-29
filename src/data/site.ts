@@ -246,7 +246,7 @@ export const clientLogos = [
   { file: "client-polywerft.png", alt: "Polywerft" },
   { file: "client-staib.png", alt: "Staib" },
   { file: "client-prima-vera-dresses.png", alt: "Prima Vera Dresses" },
-  { file: "client-bck-adventure.png", alt: "BCK Adventure" },
+  { file: "client-bck-adventure.png", alt: "BootCenter Konstanz" },
   { file: "client-a-gradmann.png", alt: "A. Gradmann" },
   { file: "client-langenbach.png", alt: "Langenbach" },
   { file: "client-freshlineart.png", alt: "FreshLineArt" },
